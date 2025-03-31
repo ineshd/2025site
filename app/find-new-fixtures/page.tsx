@@ -44,15 +44,19 @@ export default function Home() {
                     <Carousel className="max-w-[400px] mx-auto" opts={{loop: true,}}>
                         <CarouselContent className="max-h-[400px] ">
                             <CarouselItem>
+                                {/* eslint-disable-next-line @next/next/no-img-element */}
                                 <img src="/1.jpg" alt="Fixture 1" className="h-full w-full object-cover  rounded-lg p-8" />
                             </CarouselItem>
                             <CarouselItem>
+                                {/* eslint-disable-next-line @next/next/no-img-element */}
                                 <img src="/23.jpg" alt="Fixture 2" className="h-full w-full object-cover  rounded-lg p-8" />
                             </CarouselItem>
                             <CarouselItem>
+                                {/* eslint-disable-next-line @next/next/no-img-element */}
                                 <img src="/34.jpg" alt="Fixture 3" className="h-full w-full  object-cover  rounded-lg p-8" />
                             </CarouselItem>
                             <CarouselItem>
+                                {/* eslint-disable-next-line @next/next/no-img-element */}
                                 <img src="/45.jpg" alt="Fixture 3" className="h-full w-full object-cover  rounded-lg p-8" />
                             </CarouselItem>
                         </CarouselContent>
@@ -69,7 +73,7 @@ export default function Home() {
                 >
                     <h2 className="text-2xl font-bold mb-4">The Problem</h2>
                     <p className="text-lg mb-4">
-                        So... recently I checked out our water bill, and turns out we're spending some crazy amount of money I wouldn't have ever guessed. And maybe, you are too! So strap on and maybe you'll find some new fixtures too!
+                        So... recently I checked out our water bill, and turns out we&apos;re spending some crazy amount of money I wouldn&apos;t have ever guessed. And maybe, you are too! So strap on and maybe you'll find some new fixtures too!
                     </p>
                 </motion.div>
             </div>
@@ -80,7 +84,7 @@ export default function Home() {
                 transition={{ duration: 0.8 }}
             >
                 <h2 className="text-4xl max-md:text-3xl">So what is a lot?</h2>
-                <p className="text-xl text-center">I don't know about yours, but our water bill was at</p>
+                <p className="text-xl text-center">I don&apos;t know about yours, but our water bill was at</p>
                 <motion.div
                     ref={ref}
                     className="text-4xl font-bold text-primary text-center"
@@ -110,7 +114,7 @@ export default function Home() {
             >
                 <h2 className="text-3xl max-md:text-3xl">Identifying the wall of shame</h2>
                 <div className="w-[60%] max-w-[1200px] pt-8 text-lg">
-                    <p className="">With a bit of Google reverse image search and online resources, I got information about each of the pictured items. Turns out, we're pretty good at choosing the good stuff, but some of these are definitely not good</p>
+                    <p className="">With a bit of Google reverse image search and online resources, I got information about each of the pictured items. Turns out, we&apos;re pretty good at choosing the good stuff, but some of these are definitely not good</p>
                     <div className="text-lg pt-8">
                         <ul>
                             <li>
@@ -120,7 +124,7 @@ export default function Home() {
                                 <Link href="https://www.homedepot.com/p/Waterpik-2-Spray-7-8-in-Single-Wall-Mount-Fixed-Rain-Shower-Head-in-White-CF-201/100092293" className="text-primary">Shower Head</Link> - 2.5 GPM is a bit much. Minimum ideal: 1.8 GPM
                             </li>
                             <li>
-                                <Link href="https://www.whirlpool.com/owners-center-pdp.WTW4815EW.html" className="text-primary">Washer</Link> - Sure it's pretty energy efficient, but it uses a lot of water, typically around 28 gallons on a full load.
+                                <Link href="https://www.whirlpool.com/owners-center-pdp.WTW4815EW.html" className="text-primary">Washer</Link> - Sure it&apos;s pretty energy efficient, but it uses a lot of water, typically around 28 gallons on a full load.
                                 This is not good! Some energy star washers use way less than 15 gallons per load.
                             </li>
                             <li>
@@ -138,7 +142,7 @@ export default function Home() {
             >
                 <h2 className="text-3xl max-md:text-3xl">Replacing them</h2>
                 <div className="w-[60%] max-w-[1200px] pt-8 text-lg">
-                    <p className="">Based on my research online, I've found a ton of great alternatives for each! I tried searching for a wide price range, so you can find the right one for you!</p>
+                    <p className="">Based on my research online, I&apos;ve found a ton of great alternatives for each! I tried searching for a wide price range, so you can find the right one for you!</p>
                     <div className="mt-8 mb-4 text-xl">Washers (some based on water use on Energy Star site, annual divided by 295)</div>
                     <table className="table-auto border-collapse border border-gray-300 w-full text-left">
                         <thead>
@@ -171,7 +175,7 @@ export default function Home() {
                             </tr>
                         </tbody>
                     </table>
-                    <div className="mt-8 mb-4 text-xl">Kitchen Faucets <p className="text-lg">Turns out mine was pretty good, but here's some efficient ones to consider if you're above 1.8 GPM</p></div>
+                    <div className="mt-8 mb-4 text-xl">Kitchen Faucets <p className="text-lg">Turns out mine was pretty good, but here&apos;s some efficient ones to consider if you&apos;re above 1.8 GPM</p></div>
                     <table className="table-auto border-collapse border border-gray-300 w-full text-left">
                         <thead>
                             <tr className="bg-white text-black">
@@ -279,7 +283,7 @@ export default function Home() {
                 <h2 className="text-3xl max-md:text-3xl">Results!</h2>
                 <div className="w-[60%] max-w-[1200px] pt-8 text-lg">
                     Both motivation from me and our water bill allowed me to convince my parents that we do in fact need to replace our stuff. 
-                    Now, theoretically, if we replaced all of our stuff, here's the amount of water we'd save per month:
+                    Now, theoretically, if we replaced all of our stuff, here&apos;s the amount of water we&apos;d save per month:
 
                     <ul className="list-disc pl-8">
                         <li>Bathroom Faucet: 126 gallons/week</li>
@@ -298,7 +302,7 @@ export default function Home() {
                 transition={{ duration: 0.8 }}
             >
                 <h2 className="text-3xl max-md:text-3xl">What are you waiting for?</h2>
-                <p className="text-xl">See what you're missing out on and swap to more water efficient fixtures, and maybe you'll save some money too!</p>
+                <p className="text-xl">See what you&apos;re missing out on and swap to more water efficient fixtures, and maybe you&apos;ll save some money too!</p>
             </motion.div>
             <motion.div
                 className="flex flex-col items-center justify-center my-32 mx-16"
