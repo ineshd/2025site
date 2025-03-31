@@ -73,7 +73,7 @@ export default function Home() {
                 >
                     <h2 className="text-2xl font-bold mb-4">The Problem</h2>
                     <p className="text-lg mb-4">
-                        So... recently I checked out our water bill, and turns out we&apos;re spending some crazy amount of money I wouldn&apos;t have ever guessed. And maybe, you are too! So strap on and maybe you'll find some new fixtures too!
+                        So... recently I checked out our water bill, and turns out we&apos;re spending some crazy amount of money I wouldn&apos;t have ever guessed. And maybe, you are too! So strap on and maybe you&apos;ll find some new fixtures too!
                     </p>
                 </motion.div>
             </div>
