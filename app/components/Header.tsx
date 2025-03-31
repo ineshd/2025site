@@ -61,7 +61,13 @@ const Header = ({position = 'sticky'}: HeaderProps) => {
                     <AnimatedText text="4545"/>
                 </p>
             </Link>
-            <div className={"flex"}></div>
+            <div className={"flex ml-auto mr-16"}>
+                <ul>
+                    <li>
+                        <Link href={"/find-new-fixtures"}>Finding New Fixtures</Link>
+                    </li>
+                </ul>
+            </div>
         </header>
     );
 };
