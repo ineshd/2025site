@@ -23,7 +23,7 @@ export default function Home() {
                         University of Michigan CoE '30 | Computer Science & Engineering
                     </p>
                     <p className="text-xl max-lg:text-base max-w-lg leading-relaxed pointer-events-auto">
-                        I like installing software :)
+                        I like installing software, meeting people, and winning competitions :)
                     </p>
                     <p className="text-md tracking-wide pointer-events-auto">
                         try clicking the background
