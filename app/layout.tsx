@@ -1,5 +1,6 @@
 import type {Metadata} from "next";
-import {Geist, Geist_Mono} from "next/font/google";
+import {Geist, Geist_Mono, Montserrat} from "next/font/google";
+import {ViewTransitionProvider} from "@/app/components/ViewTransitionProvider";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -12,9 +13,14 @@ const geistMono = Geist_Mono({
     subsets: ["latin"],
 });
 
+const montserrat = Montserrat({
+    variable: "--font-montserrat",
+    subsets: ["latin"],
+});
+
 export const metadata: Metadata = {
-    title: "Inesh Dey (4545)",
-    description: "All the stuff I've done in one place",
+    title: "Inesh Dey",
+    description: "A good amount of the things I've done.",
 };
 
 export default function RootLayout({
@@ -25,9 +31,11 @@ export default function RootLayout({
     return (
         <html lang="en">
         <body
-            className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+            className={`${geistSans.variable} ${geistMono.variable} ${montserrat.variable} antialiased`}
         >
-        {children}
+        <ViewTransitionProvider>
+            {children}
+        </ViewTransitionProvider>
         </body>
         </html>
     );

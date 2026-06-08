@@ -1,13 +1,15 @@
-@import url('https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&display=swap');
-
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 body {
-    font-family: "Jost", Helvetica, Arial, sans-serif;
+    font-family: Arial, Helvetica, sans-serif;
     overflow-x: hidden;
+}
+
+h1, h2, h3,
+.text-3xl, .text-4xl, .text-5xl, .text-6xl, .text-7xl, .text-8xl, .text-9xl, .text-10xl {
+    font-family: var(--font-montserrat), Arial, Helvetica, sans-serif;
 }
 
 @layer base {
@@ -41,5 +43,57 @@ body {
 
     body {
         @apply bg-background text-foreground;
+    }
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+    animation-duration: 0.45s;
+    animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+::view-transition-old(root) {
+    animation-name: site-fade-out;
+}
+
+::view-transition-new(root) {
+    animation-name: site-fade-in;
+}
+
+@keyframes site-fade-out {
+    to {
+        opacity: 0;
+        transform: scale(0.98);
+    }
+}
+
+@keyframes site-fade-in {
+    from {
+        opacity: 0;
+        transform: scale(1.02);
+    }
+}
+
+/* The hero section only exists on the home page, so ::view-transition-new(hero)
+   only fires when navigating back to it — sliding it down over whatever page
+   it's replacing. ::view-transition-old(hero) only fires leaving the home page,
+   where the default crossfade from ::view-transition-old(root) is fine. */
+::view-transition-new(hero) {
+    animation: hero-slide-in 0.6s cubic-bezier(0.65, 0, 0.35, 1) both;
+}
+
+/* Keep the navbar above the sliding hero so it stays fully visible — named
+   groups otherwise paint in DOM order, and the hero (later in the tree)
+   would slide down on top of it. */
+::view-transition-group(navbar) {
+    z-index: 100;
+}
+
+@keyframes hero-slide-in {
+    from {
+        transform: translateY(-100%);
+    }
+    to {
+        transform: translateY(0);
     }
 }

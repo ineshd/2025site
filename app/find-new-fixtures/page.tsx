@@ -30,7 +30,7 @@ export default function Home() {
                 </h1>
                 <p className={"text-center"}>a project by Inesh Dey</p>
                 <p className={"text-center"}>3/28/25</p>
-                <div className={"opacity-10 absolute inset-0 z-10"}>
+                <div aria-hidden="true" className={"opacity-10 absolute inset-0 z-10"}>
                     <FullScreen4545Grid />
                 </div>
             </motion.div>

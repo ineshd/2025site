@@ -1,23 +1,93 @@
+"use client"
+
 import Layout from "@/app/components/Layout";
 import FullScreen4545Grid from "@/app/components/FullScreen4545Grid";
+import TransitionLink from "@/app/components/TransitionLink";
 import Link from "next/link";
+import {Github, Linkedin, Mail} from "lucide-react";
 
 export default function Home() {
     return (
         <Layout headerPosition="absolute">
-            <div className="opacity-10 absolute">
-                <FullScreen4545Grid/>
-            </div>
-            <div className="absolute pointer-events-none">
-                <div className={"w-screen h-screen flex flex-col justify-center items-center text-center pointer-events-none px-8"}>
-                    <h1 className={"text-5xl max-lg:text-2xl text-font-medium pointer-events-auto mx-16"}>The new home for <br/>Inesh Dey&apos;s random stuff</h1>
-                    <p className={"text-xl pointer-events-auto"}>This page is under construction.</p>
-                    <Link href={"https://s4545.eu.org"}><p className={"text-lg text-primary pointer-events-auto"}>Check out my more complete site →</p></Link>
 
-                    <Link href={"/find-new-fixtures"}><p className={"text-lg text-primary pointer-events-auto"}>Check out Find new Fixtures →</p></Link>
-
+            {/* Hero */}
+            <section className="[view-transition-name:hero] relative h-screen flex flex-col justify-center items-center text-center px-8 lg:items-start lg:justify-end lg:text-left lg:px-20 lg:pb-24">
+                <div aria-hidden="true" className="opacity-10 absolute inset-0 overflow-hidden">
+                    <FullScreen4545Grid clickToFlip/>
                 </div>
-            </div>
+                <div className="relative z-10 flex flex-col items-center gap-5 lg:items-start pointer-events-none">
+                    <h1 className="text-6xl max-lg:text-4xl max-sm:text-3xl font-black italic pointer-events-auto">
+                        Inesh Dey
+                    </h1>
+                    <p className="text-2xl max-lg:text-xl text-accent pointer-events-auto">
+                        University of Michigan CoE '30 | Computer Science & Engineering
+                    </p>
+                    <p className="text-xl max-lg:text-base max-w-lg leading-relaxed pointer-events-auto">
+                        I like installing software :)
+                    </p>
+                    <p className="text-md tracking-wide pointer-events-auto">
+                        try clicking the background
+                    </p>
+                    <div className="flex gap-6 mt-4 text-foreground/50 pointer-events-auto">
+                        <Link href="https://github.com/somebody4545" target="_blank" aria-label="GitHub"
+                              className="hover:text-primary transition-colors duration-200">
+                            <Github size={28}/>
+                        </Link>
+                        <Link href="https://linkedin.com/in/ineshdey" target="_blank" aria-label="LinkedIn"
+                              className="hover:text-primary transition-colors duration-200">
+                            <Linkedin size={28}/>
+                        </Link>
+                        <Link href="mailto:ineshdey@hotmail.com" aria-label="Email"
+                              className="hover:text-primary transition-colors duration-200">
+                            <Mail size={28}/>
+                        </Link>
+                    </div>
+                </div>
+                <p className="absolute bottom-12 inset-x-0 text-center text-xl text-foreground/50 tracking-wide shadow-lg pointer-events-none"><span>scroll</span></p>
+            </section>
+
+            {/* About */}
+            <section className="px-16 max-lg:px-8 pt-16 pb-28">
+                <div className="max-w-5xl mx-auto flex items-center gap-16 max-lg:flex-col-reverse">
+                    <div className="flex-1 flex flex-col items-start gap-6 max-lg:items-center max-lg:text-center">
+                        <h2 className="text-4xl max-sm:text-3xl font-black italic">About Me</h2>
+                        <p className="text-lg text-foreground/50 leading-relaxed max-w-md">
+                            I'm a CS &amp; Engineering student from Redmond, WA, who dabbles in 3D graphics, web development, and machine learning. I find the same fascination in designing a UI, debugging, or tweaking a neural network at 3 AM till it works. <br/><br></br>I try to work on a variety of projects with the newest tech, and love talking about it too. I'm always down to chat; feel free to reach out!
+                        </p>
+                        <div className="flex flex-col sm:flex-row gap-6 w-full">
+                            <TransitionLink href="/projects"
+                                            className="group flex-1 flex items-center justify-between border border-border/20 rounded-lg px-8 py-6 hover:border-primary/40 transition-colors duration-200">
+                                <span className="[view-transition-name:projects-heading] text-2xl font-black italic group-hover:text-primary transition-colors duration-200">
+                                    Projects
+                                </span>
+                                <span className="text-foreground/30 group-hover:text-primary transition-colors duration-200">→</span>
+                            </TransitionLink>
+                            <TransitionLink href="/experience"
+                                            className="group flex-1 flex items-center justify-between border border-border/20 rounded-lg px-8 py-6 hover:border-primary/40 transition-colors duration-200">
+                                <span className="[view-transition-name:experience-heading] text-2xl font-black italic group-hover:text-primary transition-colors duration-200">
+                                    Experience
+                                </span>
+                                <span className="text-foreground/30 group-hover:text-primary transition-colors duration-200">→</span>
+                            </TransitionLink>
+                        </div>
+                    </div>
+                    {/* TODO: swap in the gaussian splat viewer once it's ready */}
+                    <div className="w-full lg:w-96 h-72 shrink-0 rounded-lg bg-blue-950/60 border border-blue-400/10 flex items-center justify-center text-center px-6">
+                        <p className="text-lg italic text-foreground/30">gaussian splat coming soon!</p>
+                    </div>
+                </div>
+            </section>
+
+            {/* Blog */}
+            <section className="px-16 max-lg:px-8 pb-28">
+                <div className="max-w-5xl mx-auto border border-border/20 rounded-lg px-10 py-16 text-center">
+                    <h2 className="text-3xl max-sm:text-2xl font-black italic mb-3">Blog</h2>
+                    <p className="text-lg text-foreground/50 leading-relaxed">
+                        Soon™ since 2024, might do it on Substack since that's more convenient for both of us.
+                    </p>
+                </div>
+            </section>
+
         </Layout>
     );
 }
