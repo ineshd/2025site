@@ -1,6 +1,7 @@
 "use client"
 
 import Layout from "@/app/components/Layout";
+import GaussianSplatViewer from "@/app/components/GaussianSplatViewer";
 import FullScreen4545Grid from "@/app/components/FullScreen4545Grid";
 import TransitionLink from "@/app/components/TransitionLink";
 import Link from "next/link";
@@ -48,32 +49,31 @@ export default function Home() {
 
             {/* About */}
             <section className="px-16 max-lg:px-8 pt-16 pb-28">
-                <div className="max-w-5xl mx-auto flex items-center gap-16 max-lg:flex-col-reverse">
-                    <div className="flex-1 flex flex-col items-start gap-6 max-lg:items-center max-lg:text-center">
-                        <h2 className="text-4xl max-sm:text-3xl font-black italic">About Me</h2>
-                        <p className="text-lg text-foreground/50 leading-relaxed max-w-md">
-                            I'm a CS &amp; Engineering student from Redmond, WA, who dabbles in 3D graphics, web development, and machine learning, using them creatively on everything from a TSA Nationals winning website or a history class. I find the same fascination in designing a UI, debugging, or tweaking a neural network at 3 AM till it works. <br/><br></br>I try to work on a variety of projects with the newest tech, and love talking about it too. I'm always down to chat; feel free to reach out!
-                        </p>
-                        <div className="flex flex-col sm:flex-row gap-6 w-full">
-                            <TransitionLink href="/projects"
-                                            className="group flex-1 flex items-center justify-between border border-border/20 rounded-lg px-8 py-6 hover:border-primary/40 transition-colors duration-200">
-                                <span className="[view-transition-name:projects-heading] text-2xl font-black italic group-hover:text-primary transition-colors duration-200">
-                                    Projects
-                                </span>
-                                <span className="text-foreground/30 group-hover:text-primary transition-colors duration-200">→</span>
-                            </TransitionLink>
-                            <TransitionLink href="/experience"
-                                            className="group flex-1 flex items-center justify-between border border-border/20 rounded-lg px-8 py-6 hover:border-primary/40 transition-colors duration-200">
-                                <span className="[view-transition-name:experience-heading] text-2xl font-black italic group-hover:text-primary transition-colors duration-200">
-                                    Experience
-                                </span>
-                                <span className="text-foreground/30 group-hover:text-primary transition-colors duration-200">→</span>
-                            </TransitionLink>
-                        </div>
+                <div className="max-w-5xl mx-auto grid gap-x-16 gap-y-6 items-center
+                                grid-cols-1 [grid-template-areas:'heading'_'description'_'splat'_'actions']
+                                lg:grid-cols-[1fr_40rem] lg:[grid-template-areas:'heading_splat'_'description_splat'_'actions_splat']">
+                    <h2 className="[grid-area:heading] text-4xl max-sm:text-3xl font-black italic max-lg:text-center">About Me</h2>
+                    <p className="[grid-area:description] text-lg text-foreground/50 leading-relaxed max-w-md max-lg:mx-auto max-lg:text-center">
+                        I'm a CS &amp; Engineering student from Redmond, WA, who dabbles in 3D graphics, web development, and machine learning, using them creatively on everything from a TSA Nationals winning website or a history class. I find the same fascination in designing a UI, debugging, or tweaking a neural network at 3 AM till it works. <br/><br></br>I try to work on a variety of projects with the newest tech, and love talking about it too. I'm always down to chat; feel free to reach out!
+                    </p>
+                    <div className="[grid-area:splat] w-full lg:w-[40rem] h-[34rem] shrink-0 rounded-lg overflow-hidden">
+                        <GaussianSplatViewer src="/splats/splat-trained.ply" className="w-full h-full"/>
                     </div>
-                    {/* TODO: swap in the gaussian splat viewer once it's ready */}
-                    <div className="w-full lg:w-96 h-72 shrink-0 rounded-lg bg-blue-950/60 border border-blue-400/10 flex items-center justify-center text-center px-6">
-                        <p className="text-lg italic text-foreground/30">gaussian splat coming soon!</p>
+                    <div className="[grid-area:actions] flex flex-col sm:flex-row gap-6 w-full">
+                        <TransitionLink href="/projects"
+                                        className="group flex-1 flex items-center justify-between border border-border/20 rounded-lg px-8 py-6 hover:border-primary/40 transition-colors duration-200">
+                            <span className="[view-transition-name:projects-heading] text-2xl font-black italic group-hover:text-primary transition-colors duration-200">
+                                Projects
+                            </span>
+                            <span className="text-foreground/30 group-hover:text-primary transition-colors duration-200">→</span>
+                        </TransitionLink>
+                        <TransitionLink href="/experience"
+                                        className="group flex-1 flex items-center justify-between border border-border/20 rounded-lg px-8 py-6 hover:border-primary/40 transition-colors duration-200">
+                            <span className="[view-transition-name:experience-heading] text-2xl font-black italic group-hover:text-primary transition-colors duration-200">
+                                Experience
+                            </span>
+                            <span className="text-foreground/30 group-hover:text-primary transition-colors duration-200">→</span>
+                        </TransitionLink>
                     </div>
                 </div>
             </section>
