@@ -52,7 +52,7 @@ export default function Home() {
                     <div className="flex-1 flex flex-col items-start gap-6 max-lg:items-center max-lg:text-center">
                         <h2 className="text-4xl max-sm:text-3xl font-black italic">About Me</h2>
                         <p className="text-lg text-foreground/50 leading-relaxed max-w-md">
-                            I'm a CS &amp; Engineering student from Redmond, WA, who dabbles in 3D graphics, web development, and machine learning, using them creatively on everything from my TSA Nationals winning website or a history class. I find the same fascination in designing a UI, debugging, or tweaking a neural network at 3 AM till it works. <br/><br></br>I try to work on a variety of projects with the newest tech, and love talking about it too. I'm always down to chat; feel free to reach out!
+                            I'm a CS &amp; Engineering student from Redmond, WA, who dabbles in 3D graphics, web development, and machine learning, using them creatively on everything from a TSA Nationals winning website or a history class. I find the same fascination in designing a UI, debugging, or tweaking a neural network at 3 AM till it works. <br/><br></br>I try to work on a variety of projects with the newest tech, and love talking about it too. I'm always down to chat; feel free to reach out!
                         </p>
                         <div className="flex flex-col sm:flex-row gap-6 w-full">
                             <TransitionLink href="/projects"
