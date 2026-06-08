@@ -16,10 +16,15 @@ export default function GaussianSplatViewer({src, className}: { src: string; cla
         camera.position.set(0, 1.2, 4);
         camera.lookAt(0, 0, 0);
 
+        // Render at a fraction of the container's CSS size (canvas is upscaled via CSS) to keep
+        // the splat sort/raster cost down — gaussian splatting is fill-rate heavy.
+        const RENDER_SCALE = 0.5;
         const renderer = new THREE.WebGLRenderer({antialias: true, alpha: true});
         renderer.setClearColor(0x000000, 0);
-        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-        renderer.setSize(container.clientWidth, container.clientHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
+        renderer.setSize(container.clientWidth * RENDER_SCALE, container.clientHeight * RENDER_SCALE, false);
+        renderer.domElement.style.width = "100%";
+        renderer.domElement.style.height = "100%";
         container.appendChild(renderer.domElement);
 
         const splatViewer = new GaussianSplats3D.DropInViewer({
@@ -93,7 +98,7 @@ export default function GaussianSplatViewer({src, className}: { src: string; cla
             if (clientWidth === 0 || clientHeight === 0) return;
             camera.aspect = clientWidth / clientHeight;
             camera.updateProjectionMatrix();
-            renderer.setSize(clientWidth, clientHeight);
+            renderer.setSize(clientWidth * RENDER_SCALE, clientHeight * RENDER_SCALE, false);
         };
         const resizeObserver = new ResizeObserver(handleResize);
         resizeObserver.observe(container);
