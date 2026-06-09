@@ -71,7 +71,7 @@ const Header = ({position = 'sticky'}: HeaderProps) => {
                         <p className={"text-primary text-3xl max-lg:text-2xl font-black italic"}>
                             ineshd.com
                         </p>
-                        <span className={"text-xs text-muted-foreground -mt-2"}>v1.0</span>
+                        <span className={"text-xs text-muted-foreground -mt-2"}>v1.1</span>
                     </div>
                 </TransitionLink>
                 <nav className={"max-lg:hidden flex ml-auto mr-16 gap-3 items-center text-base font-medium"}>
