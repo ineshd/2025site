@@ -15,7 +15,7 @@ import {memo, useState} from "react";
 const SplatContainer = memo(function SplatContainer() {
     const [splatLoaded, setSplatLoaded] = useState(false);
     return (
-        <div className="[grid-area:splat] relative w-full lg:w-[40rem] h-[34rem] shrink-0 rounded-lg overflow-hidden">
+        <div className="[grid-area:splat] relative w-full lg:w-[40rem] h-64 sm:h-80 lg:h-[34rem] shrink-0 rounded-lg overflow-hidden">
             {splatLoaded ? (
                 <GaussianSplatViewer src="/splats/splat-trained.ply" className="w-full h-full"/>
             ) : (
