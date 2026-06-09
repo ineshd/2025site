@@ -36,6 +36,12 @@ export function ViewTransitionProvider({children}: { children: ReactNode }) {
             return;
         }
 
+        // The hero group exists in both directions, so its slide-in animation
+        // would also run (wrongly) when leaving home. Tag only the navigation
+        // *to* home so the CSS can scope the slide to that direction; otherwise
+        // the hero just uses the default crossfade out.
+        document.documentElement.classList.toggle("vt-to-home", href === "/");
+
         // Swap the home hero's animated grid for its cheap static stand-in
         // *before* the old state is captured, so the snapshot doesn't have to
         // rasterize hundreds of live framer-motion nodes. No-op off the home page.
@@ -54,8 +60,10 @@ export function ViewTransitionProvider({children}: { children: ReactNode }) {
         });
         transition.ready.catch(() => {
         });
-        transition.finished.catch(() => {
-        });
+        transition.finished
+            .finally(() => document.documentElement.classList.remove("vt-to-home"))
+            .catch(() => {
+            });
     };
 
     return (

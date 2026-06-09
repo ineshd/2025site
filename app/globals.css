@@ -74,11 +74,17 @@ h1, h2, h3,
     }
 }
 
-/* The hero section only exists on the home page, so ::view-transition-new(hero)
-   only fires when navigating back to it — sliding it down over whatever page
-   it's replacing. ::view-transition-old(hero) only fires leaving the home page,
-   where the default crossfade from ::view-transition-old(root) is fine. */
-::view-transition-new(hero) {
+/* The hero section only exists on the home page, so the hero group only has a
+   ::view-transition-new (no -old) when navigating back to it — we slide it down
+   over whatever page it's replacing. Leaving the home page, the default
+   crossfade from ::view-transition-old(root) is fine.
+
+   The slide is applied to ::view-transition-group(hero), not ::view-transition-new:
+   WebKit/Safari does not reliably run custom transform animations on the
+   old/new *image* pseudos, but it does honor them on the *group* (same place we
+   set the navbar z-index). The hero sits at the top-left of the viewport, so the
+   group's placement transform is identity and our translateY override is safe. */
+:root.vt-to-home::view-transition-group(hero) {
     animation: hero-slide-in 0.6s cubic-bezier(0.65, 0, 0.35, 1) both;
 }
 
