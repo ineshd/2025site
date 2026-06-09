@@ -134,6 +134,7 @@ const FullScreen4545Grid: React.FC<FullScreen4545GridProps> = ({ clickToFlip = f
         if (!clickToFlip || flipPhase !== 'idle') return;
 
         const nextIndex = (textIndex + 1) % flipTexts.length;
+        const savedScroll = window.scrollY;
 
         setFlipPhase('compressing');
 
@@ -143,6 +144,8 @@ const FullScreen4545Grid: React.FC<FullScreen4545GridProps> = ({ clickToFlip = f
             setLayoutKey(k => k + 1);
             setTextIndex(nextIndex);
             setFlipPhase('expanding');
+            // Restore scroll position after React flushes the DOM changes
+            requestAnimationFrame(() => window.scrollTo({ top: savedScroll, behavior: 'instant' }));
             setTimeout(() => setFlipPhase('idle'), FLIP_STEP_MS);
         }, FLIP_STEP_MS);
     };
@@ -160,7 +163,7 @@ const FullScreen4545Grid: React.FC<FullScreen4545GridProps> = ({ clickToFlip = f
             />
 
             {numCols > 0 && loopWidth > 0 && (
-                <div className="w-screen h-screen flex flex-col items-center justify-center overflow-hidden cursor-default select-none">
+                <div className="w-screen h-screen flex flex-col items-center justify-center overflow-hidden cursor-default select-none [overflow-anchor:none]">
                     <div className="rotate-12">
                         {Array.from({ length: numRows }, (_, rowIndex) => {
                             const goesLeft = rowIndex % 2 === 0;

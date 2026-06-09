@@ -29,7 +29,7 @@ const SplatContainer = memo(function SplatContainer() {
                     />
                     <button
                         type="button"
-                        onClick={() => setSplatLoaded(true)}
+                        onClick={(e) => { e.currentTarget.blur(); setSplatLoaded(true); }}
                         className="relative z-10 px-8 py-4 border border-border/20 rounded-lg text-foreground/70 hover:border-primary/40 hover:text-foreground bg-background/60 backdrop-blur-sm transition-colors duration-200"
                     >
                         Load 3D model
@@ -46,7 +46,7 @@ export default function Home() {
 
             {/* Hero */}
             <section className="[view-transition-name:hero] relative h-screen flex flex-col justify-center items-center text-center px-8 lg:items-start lg:justify-end lg:text-left lg:px-20 lg:pb-24">
-                <div aria-hidden="true" className="opacity-10 absolute inset-0 overflow-hidden">
+                <div aria-hidden="true" className="opacity-10 absolute inset-0 overflow-hidden [overflow-anchor:none]">
                     <FullScreen4545Grid clickToFlip/>
                 </div>
                 <div className="relative z-10 flex flex-col items-center gap-5 lg:items-start pointer-events-none">
