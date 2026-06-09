@@ -36,7 +36,14 @@ export function ViewTransitionProvider({children}: { children: ReactNode }) {
             return;
         }
 
+        // Swap the home hero's animated grid for its cheap static stand-in
+        // *before* the old state is captured, so the snapshot doesn't have to
+        // rasterize hundreds of live framer-motion nodes. No-op off the home page.
+        document.dispatchEvent(new CustomEvent("hero-capture:start"));
+
         const transition = document.startViewTransition(() => {
+            // Old state is captured by now — restore the live grid.
+            document.dispatchEvent(new CustomEvent("hero-capture:end"));
             router.push(href);
             return new Promise<void>((resolve) => {
                 pending.current = {href, resolve};

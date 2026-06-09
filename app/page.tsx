@@ -2,7 +2,7 @@
 
 import Layout from "@/app/components/Layout";
 import GaussianSplatViewer from "@/app/components/GaussianSplatViewer";
-import FullScreen4545Grid from "@/app/components/FullScreen4545Grid";
+import HeroBackground from "@/app/components/HeroBackground";
 import TransitionLink from "@/app/components/TransitionLink";
 import Link from "next/link";
 import Image from "next/image";
@@ -47,9 +47,7 @@ export default function Home() {
 
             {/* Hero */}
             <section className="[view-transition-name:hero] relative h-screen flex flex-col justify-center items-center text-center px-8 lg:items-start lg:justify-end lg:text-left lg:px-20 lg:pb-24">
-                <div aria-hidden="true" className="opacity-10 absolute inset-0 overflow-hidden [overflow-anchor:none]">
-                    <FullScreen4545Grid clickToFlip/>
-                </div>
+                <HeroBackground/>
                 <div className="relative z-10 flex flex-col items-center gap-5 lg:items-start pointer-events-none">
                     <h1 className="text-6xl max-lg:text-4xl max-sm:text-3xl font-black italic pointer-events-auto">
                         Inesh Dey

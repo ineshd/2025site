@@ -4,6 +4,10 @@ import { motion } from 'framer-motion';
 
 interface FullScreen4545GridProps {
     clickToFlip?: boolean;
+    // When false, render a cheap non-animated single-pass grid. Used as the
+    // view-transition snapshot stand-in so the browser never has to rasterize
+    // the hundreds of live framer-motion nodes into a named-group snapshot.
+    animate?: boolean;
 }
 
 const getSystemInfo = (): string => {
@@ -42,11 +46,10 @@ const ROW_HEIGHT_PX = 48; // text-5xl with line-height: none
 const FLIP_STEP_MS = 150;
 const SCROLL_DURATION_S = 360;
 
-const FullScreen4545Grid: React.FC<FullScreen4545GridProps> = ({ clickToFlip = false }) => {
+const FullScreen4545Grid: React.FC<FullScreen4545GridProps> = ({ clickToFlip = false, animate = true }) => {
     const [textIndex, setTextIndex] = useState(0);
     const [flipPhase, setFlipPhase] = useState<FlipPhase>('idle');
     const [systemInfo, setSystemInfo] = useState('');
-
     // Grid dimensions
     const [numRows, setNumRows] = useState(0);
     const [numCols, setNumCols] = useState(0);
@@ -165,7 +168,28 @@ const FullScreen4545Grid: React.FC<FullScreen4545GridProps> = ({ clickToFlip = f
                 style={{ position: 'fixed', visibility: 'hidden', pointerEvents: 'none', top: -9999, left: -9999 }}
             />
 
-            {numCols > 0 && loopWidth > 0 && (
+            {/* Static stand-in: single-pass coverage (numCols/3), no motion, no
+                handlers. Cheap for the browser to rasterize into a snapshot. */}
+            {!animate && numCols > 0 && (
+                <div className="w-screen h-screen flex flex-col items-center justify-center overflow-hidden cursor-default select-none [overflow-anchor:none]">
+                    <div className="rotate-12">
+                        {Array.from({ length: numRows }, (_, rowIndex) => (
+                            <div key={rowIndex} className={`flex justify-center ${rowIndex % 2 === 0 ? 'ml-16' : 'ml-0'}`}>
+                                {Array.from({ length: Math.ceil(numCols / 3) }, (_, colIndex) => (
+                                    <span
+                                        key={colIndex}
+                                        className="text-5xl/none font-bold text-text italic spacing-1 text-nowrap"
+                                    >
+                                        {text}
+                                    </span>
+                                ))}
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            )}
+
+            {animate && numCols > 0 && loopWidth > 0 && (
                 <div className="w-screen h-screen flex flex-col items-center justify-center overflow-hidden cursor-default select-none [overflow-anchor:none]">
                     <div className="rotate-12">
                         {Array.from({ length: numRows }, (_, rowIndex) => {
