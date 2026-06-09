@@ -112,9 +112,17 @@ export default function Home() {
             <section className="px-16 max-lg:px-8 pb-28">
                 <div className="max-w-5xl mx-auto border border-border/20 rounded-lg px-10 py-16 text-center">
                     <h2 className="text-3xl max-sm:text-2xl font-black italic mb-3">Blog</h2>
-                    <p className="text-lg text-foreground/50 leading-relaxed">
-                        Soon™ since 2024, might do it on Substack since that's more convenient for both of us.
-                    </p>
+                    <div className="mt-8 flex justify-center overflow-hidden rounded-lg">
+                        <iframe
+                            src="https://somebody4545.substack.com/embed?embedId=somebody4545"
+                            width="720"
+                            height="420"
+                            style={{border: "1px solid #EEE", background: "white", maxWidth: "100%"}}
+                            frameBorder="0"
+                            scrolling="no"
+                            title="Substack embed"
+                        />
+                    </div>
                 </div>
             </section>
 
