@@ -6,8 +6,11 @@ import FullScreen4545Grid from "@/app/components/FullScreen4545Grid";
 import TransitionLink from "@/app/components/TransitionLink";
 import Link from "next/link";
 import {Github, Linkedin, Mail} from "lucide-react";
+import {useState} from "react";
 
 export default function Home() {
+    const [splatLoaded, setSplatLoaded] = useState(false);
+
     return (
         <Layout headerPosition="absolute">
 
@@ -56,8 +59,20 @@ export default function Home() {
                     <p className="[grid-area:description] text-lg text-foreground/50 leading-relaxed max-w-md max-lg:mx-auto max-lg:text-center">
                         I'm a CS &amp; Engineering student from Redmond, WA, who dabbles in 3D graphics, web development, and machine learning, using them creatively on everything from a TSA Nationals winning website or a history class. I find the same fascination in designing a UI, debugging, or tweaking a neural network at 3 AM till it works. <br/><br></br>I try to work on a variety of projects with the newest tech, and love talking about it too. I'm always down to chat; feel free to reach out!
                     </p>
-                    <div className="[grid-area:splat] w-full lg:w-[40rem] h-[34rem] shrink-0 rounded-lg overflow-hidden">
-                        <GaussianSplatViewer src="/splats/splat-trained.ply" className="w-full h-full"/>
+                    <div className="[grid-area:splat] relative w-full lg:w-[40rem] h-[34rem] shrink-0 rounded-lg overflow-hidden">
+                        {splatLoaded ? (
+                            <GaussianSplatViewer src="/splats/splat-trained.ply" className="w-full h-full"/>
+                        ) : (
+                            <div className="w-full h-full flex items-center justify-center border border-border/20 rounded-lg">
+                                <button
+                                    type="button"
+                                    onClick={() => setSplatLoaded(true)}
+                                    className="px-8 py-4 border border-border/20 rounded-lg text-foreground/70 hover:border-primary/40 hover:text-foreground transition-colors duration-200"
+                                >
+                                    Load 3D model
+                                </button>
+                            </div>
+                        )}
                     </div>
                     <div className="[grid-area:actions] flex flex-col sm:flex-row gap-6 w-full">
                         <TransitionLink href="/projects"
