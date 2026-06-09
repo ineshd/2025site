@@ -40,7 +40,7 @@ type FlipPhase = 'idle' | 'compressing' | 'expanding';
 const ROTATION_DEG = 12;
 const ROW_HEIGHT_PX = 48; // text-5xl with line-height: none
 const FLIP_STEP_MS = 150;
-const SCROLL_DURATION_S = 120;
+const SCROLL_DURATION_S = 360;
 
 const FullScreen4545Grid: React.FC<FullScreen4545GridProps> = ({ clickToFlip = false }) => {
     const [textIndex, setTextIndex] = useState(0);

@@ -24,6 +24,7 @@ const SplatContainer = memo(function SplatContainer() {
                         src="/splats/splat-preview.png"
                         alt="3D model preview"
                         fill
+                        sizes="(min-width: 1024px) 40rem, 100vw"
                         className="object-contain"
                         priority={false}
                     />
