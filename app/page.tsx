@@ -5,6 +5,7 @@ import GaussianSplatViewer from "@/app/components/GaussianSplatViewer";
 import FullScreen4545Grid from "@/app/components/FullScreen4545Grid";
 import TransitionLink from "@/app/components/TransitionLink";
 import Link from "next/link";
+import Image from "next/image";
 import {Github, Linkedin, Mail} from "lucide-react";
 import {useState} from "react";
 
@@ -63,11 +64,18 @@ export default function Home() {
                         {splatLoaded ? (
                             <GaussianSplatViewer src="/splats/splat-trained.ply" className="w-full h-full"/>
                         ) : (
-                            <div className="w-full h-full flex items-center justify-center border border-border/20 rounded-lg">
+                            <div className="relative w-full h-full flex items-center justify-center">
+                                <Image
+                                    src="/splats/splat-preview.png"
+                                    alt="3D model preview"
+                                    fill
+                                    className="object-contain"
+                                    priority={false}
+                                />
                                 <button
                                     type="button"
                                     onClick={() => setSplatLoaded(true)}
-                                    className="px-8 py-4 border border-border/20 rounded-lg text-foreground/70 hover:border-primary/40 hover:text-foreground transition-colors duration-200"
+                                    className="relative z-10 px-8 py-4 border border-border/20 rounded-lg text-foreground/70 hover:border-primary/40 hover:text-foreground bg-background/60 backdrop-blur-sm transition-colors duration-200"
                                 >
                                     Load 3D model
                                 </button>
