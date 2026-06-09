@@ -40,7 +40,7 @@ type FlipPhase = 'idle' | 'compressing' | 'expanding';
 const ROTATION_DEG = 12;
 const ROW_HEIGHT_PX = 48; // text-5xl with line-height: none
 const FLIP_STEP_MS = 150;
-const SCROLL_DURATION_S = 360;
+const SCROLL_DURATION_S = 5;
 
 const FullScreen4545Grid: React.FC<FullScreen4545GridProps> = ({ clickToFlip = false }) => {
     const [textIndex, setTextIndex] = useState(0);
@@ -120,7 +120,10 @@ const FullScreen4545Grid: React.FC<FullScreen4545GridProps> = ({ clickToFlip = f
         let timer: ReturnType<typeof setTimeout>;
         const onResize = () => {
             clearTimeout(timer);
-            timer = setTimeout(() => calcGrid(currentText), 150);
+            timer = setTimeout(() => {
+                calcGrid(currentText);
+                setLayoutKey(k => k + 1);
+            }, 150);
         };
 
         window.addEventListener('resize', onResize);
