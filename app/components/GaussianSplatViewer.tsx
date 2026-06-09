@@ -13,7 +13,7 @@ export default function GaussianSplatViewer({src, className}: { src: string; cla
 
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera(60, container.clientWidth / container.clientHeight, 0.1, 1000);
-        camera.position.set(0, 1.2, 4);
+        camera.position.set(0, 1.2, 5);
         camera.lookAt(0, 0, 0);
 
         // Render at a fraction of the container's CSS size (canvas is upscaled via CSS) to keep
