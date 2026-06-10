@@ -1,6 +1,7 @@
 import type {Metadata} from "next";
 import {Geist, Geist_Mono, Montserrat} from "next/font/google";
 import {ViewTransitionProvider} from "@/app/components/ViewTransitionProvider";
+import {Analytics} from "@vercel/analytics/next";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -36,6 +37,7 @@ export default function RootLayout({
         <ViewTransitionProvider>
             {children}
         </ViewTransitionProvider>
+        <Analytics />
         </body>
         </html>
     );
