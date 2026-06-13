@@ -121,6 +121,7 @@ export default function Home() {
                             frameBorder="0"
                             scrolling="no"
                             title="Substack embed"
+                            loading="lazy"
                         />
                     </div>
                 </div>
