@@ -1,103 +1,61 @@
-"use client"
-
 import Layout from "@/app/components/Layout";
-import GaussianSplatViewer from "@/app/components/GaussianSplatViewer";
 import HeroBackground from "@/app/components/HeroBackground";
 import TransitionLink from "@/app/components/TransitionLink";
 import Link from "next/link";
-import Image from "next/image";
 import {Github, Linkedin, Mail} from "lucide-react";
-import {memo, useEffect, useRef, useState} from "react";
+import {metadata as layoutMetadata} from "@/app/layout";
+import {BlogPlaceholder, SplatContainer} from "@/app/components/HomePageExtras";
 
-// Isolated so that re-renders of Home (triggered by FullScreen4545Grid's flip
-// state updates) never touch this subtree — preventing the WebGL context from
-// being disposed mid-session.
-const SplatContainer = memo(function SplatContainer() {
-    const [splatLoaded, setSplatLoaded] = useState(false);
-    return (
-        <div className="[grid-area:splat] relative w-full lg:w-[40rem] h-64 sm:h-80 lg:h-[34rem] shrink-0 rounded-lg overflow-hidden">
-            {splatLoaded ? (
-                <GaussianSplatViewer src="/splats/splat-trained.ply" className="w-full h-full"/>
-            ) : (
-                <div className="relative w-full h-full flex items-center justify-center">
-                    <Image
-                        src="/splats/splat-preview.png"
-                        alt="3D model preview"
-                        fill
-                        sizes="(min-width: 1024px) 40rem, 100vw"
-                        className="object-contain"
-                        priority={false}
-                    />
-                    <button
-                        type="button"
-                        onClick={(e) => { e.currentTarget.blur(); setSplatLoaded(true); }}
-                        className="relative z-10 px-8 py-4 border border-border/20 rounded-lg text-foreground/70 hover:border-primary/40 hover:text-foreground bg-background/60 backdrop-blur-sm transition-colors duration-200"
-                    >
-                        Load 3D model
-                    </button>
-                </div>
-            )}
-        </div>
-    );
-});
+const personSchema = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: "Inesh Dey",
+    url: "https://ineshd.com",
+    jobTitle: "Computer Science & Engineering Student",
+    description: layoutMetadata.description,
+    sameAs: [
+        "https://github.com/somebody4545",
+        "https://linkedin.com/in/ineshdey",
+    ],
+};
 
-const BlogPlaceholder = memo(function BlogPlaceholder() {
-    const [blogLoaded, setBlogLoaded] = useState(false);
-    const placeholderRef = useRef<HTMLDivElement>(null);
-
-    useEffect(() => {
-        const element = placeholderRef.current;
-
-        if (!element || blogLoaded) {
-            return;
-        }
-
-        const observer = new IntersectionObserver(
-            (entries) => {
-                if (entries.some((entry) => entry.isIntersecting)) {
-                    setBlogLoaded(true);
-                    observer.disconnect();
-                }
+export const metadata = {
+    title: "Portfolio",
+    description: layoutMetadata.description,
+    alternates: {
+        canonical: "/",
+    },
+    openGraph: {
+        type: "website",
+        locale: "en_US",
+        url: "https://ineshd.com",
+        siteName: "Inesh Dey",
+        title: "Inesh Dey | Portfolio",
+        description: layoutMetadata.description,
+        images: [
+            {
+                url: "/splats/splat-preview.png",
+                width: 1200,
+                height: 630,
+                alt: "Inesh Dey portfolio preview",
             },
-            {rootMargin: "200px"}
-        );
-
-        observer.observe(element);
-
-        return () => observer.disconnect();
-    }, [blogLoaded]);
-
-    if (blogLoaded) {
-        return (
-            <div className="mt-8 flex justify-center overflow-hidden rounded-lg">
-                <iframe
-                    src="https://somebody4545.substack.com/embed?embedId=somebody4545"
-                    width="720"
-                    height="420"
-                    style={{border: "1px solid #EEE", background: "white", maxWidth: "100%"}}
-                    frameBorder="0"
-                    scrolling="no"
-                    title="Substack embed"
-                    loading="lazy"
-                />
-            </div>
-        );
-    }
-
-    return (
-        <div ref={placeholderRef} className="mt-8 mx-auto max-w-2xl rounded-lg border border-border/20 bg-background/60 px-6 py-10 text-left backdrop-blur-sm">
-            <p className="text-sm uppercase tracking-[0.3em] text-foreground/40">Blog</p>
-            <h3 className="mt-3 text-2xl max-sm:text-xl font-black italic">Newsletter preview</h3>
-            <p className="mt-4 text-foreground/60 leading-relaxed">
-                Loading embed.
-            </p>
-        </div>
-    );
-});
+        ],
+    },
+    twitter: {
+        card: "summary_large_image",
+        title: "Inesh Dey | Portfolio",
+        description: layoutMetadata.description,
+        images: ["/splats/splat-preview.png"],
+    },
+};
 
 export default function Home() {
     return (
         <Layout headerPosition="absolute">
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{__html: JSON.stringify(personSchema)}}
+            />
 
             {/* Hero */}
             <section className="[view-transition-name:hero] relative h-screen flex flex-col justify-center items-center text-center px-8 lg:items-start lg:justify-end lg:text-left lg:px-20 lg:pb-24">
