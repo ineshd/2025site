@@ -20,7 +20,9 @@ const personSchema = {
 };
 
 export const metadata = {
-    title: "Portfolio",
+    title: {
+        absolute: "Inesh Dey",
+    },
     description: layoutMetadata.description,
     alternates: {
         canonical: "/",
@@ -30,7 +32,7 @@ export const metadata = {
         locale: "en_US",
         url: "https://ineshd.com",
         siteName: "Inesh Dey",
-        title: "Inesh Dey | Portfolio",
+        title: "Inesh Dey",
         description: layoutMetadata.description,
         images: [
             {
@@ -43,7 +45,7 @@ export const metadata = {
     },
     twitter: {
         card: "summary_large_image",
-        title: "Inesh Dey | Portfolio",
+        title: "Inesh Dey",
         description: layoutMetadata.description,
         images: ["/splats/splat-preview.png"],
     },
