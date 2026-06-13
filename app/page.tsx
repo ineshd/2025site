@@ -7,7 +7,7 @@ import TransitionLink from "@/app/components/TransitionLink";
 import Link from "next/link";
 import Image from "next/image";
 import {Github, Linkedin, Mail} from "lucide-react";
-import {memo, useState} from "react";
+import {memo, useEffect, useRef, useState} from "react";
 
 // Isolated so that re-renders of Home (triggered by FullScreen4545Grid's flip
 // state updates) never touch this subtree — preventing the WebGL context from
@@ -37,6 +37,60 @@ const SplatContainer = memo(function SplatContainer() {
                     </button>
                 </div>
             )}
+        </div>
+    );
+});
+
+const BlogPlaceholder = memo(function BlogPlaceholder() {
+    const [blogLoaded, setBlogLoaded] = useState(false);
+    const placeholderRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        const element = placeholderRef.current;
+
+        if (!element || blogLoaded) {
+            return;
+        }
+
+        const observer = new IntersectionObserver(
+            (entries) => {
+                if (entries.some((entry) => entry.isIntersecting)) {
+                    setBlogLoaded(true);
+                    observer.disconnect();
+                }
+            },
+            {rootMargin: "200px"}
+        );
+
+        observer.observe(element);
+
+        return () => observer.disconnect();
+    }, [blogLoaded]);
+
+    if (blogLoaded) {
+        return (
+            <div className="mt-8 flex justify-center overflow-hidden rounded-lg">
+                <iframe
+                    src="https://somebody4545.substack.com/embed?embedId=somebody4545"
+                    width="720"
+                    height="420"
+                    style={{border: "1px solid #EEE", background: "white", maxWidth: "100%"}}
+                    frameBorder="0"
+                    scrolling="no"
+                    title="Substack embed"
+                    loading="lazy"
+                />
+            </div>
+        );
+    }
+
+    return (
+        <div ref={placeholderRef} className="mt-8 mx-auto max-w-2xl rounded-lg border border-border/20 bg-background/60 px-6 py-10 text-left backdrop-blur-sm">
+            <p className="text-sm uppercase tracking-[0.3em] text-foreground/40">Blog</p>
+            <h3 className="mt-3 text-2xl max-sm:text-xl font-black italic">Newsletter preview</h3>
+            <p className="mt-4 text-foreground/60 leading-relaxed">
+                Loading embed.
+            </p>
         </div>
     );
 });
@@ -112,18 +166,7 @@ export default function Home() {
             <section className="px-16 max-lg:px-8 pb-28">
                 <div className="max-w-5xl mx-auto border border-border/20 rounded-lg px-10 py-16 text-center">
                     <h2 className="text-3xl max-sm:text-2xl font-black italic mb-3">Blog</h2>
-                    <div className="mt-8 flex justify-center overflow-hidden rounded-lg">
-                        <iframe
-                            src="https://somebody4545.substack.com/embed?embedId=somebody4545"
-                            width="720"
-                            height="420"
-                            style={{border: "1px solid #EEE", background: "white", maxWidth: "100%"}}
-                            frameBorder="0"
-                            scrolling="no"
-                            title="Substack embed"
-                            loading="lazy"
-                        />
-                    </div>
+                    <BlogPlaceholder />
                 </div>
             </section>
 
