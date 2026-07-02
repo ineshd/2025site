@@ -1,6 +1,6 @@
 import Layout from "@/app/components/Layout";
 import HeroBackground from "@/app/components/HeroBackground";
-import TransitionLink from "@/app/components/TransitionLink";
+import NavCardLink from "@/app/components/NavCardLink";
 import Link from "next/link";
 import { Github, Linkedin, Mail } from "lucide-react";
 import { metadata as layoutMetadata } from "@/app/layout";
@@ -133,28 +133,16 @@ export default function Home() {
           </p>
           <SplatContainer />
           <div className="[grid-area:actions] flex flex-col sm:flex-row gap-6 w-full">
-            <TransitionLink
+            <NavCardLink
               href="/projects"
-              className="group flex-1 flex items-center justify-between border border-border/20 rounded-lg px-8 py-6 hover:border-primary/40 transition-colors duration-200"
-            >
-              <span className="[view-transition-name:projects-heading] text-2xl font-black italic group-hover:text-primary transition-colors duration-200">
-                Projects
-              </span>
-              <span className="text-foreground/30 group-hover:text-primary transition-colors duration-200">
-                →
-              </span>
-            </TransitionLink>
-            <TransitionLink
+              label="Projects"
+              viewTransitionName="projects-heading"
+            />
+            <NavCardLink
               href="/experience"
-              className="group flex-1 flex items-center justify-between border border-border/20 rounded-lg px-8 py-6 hover:border-primary/40 transition-colors duration-200"
-            >
-              <span className="[view-transition-name:experience-heading] text-2xl font-black italic group-hover:text-primary transition-colors duration-200">
-                Experience
-              </span>
-              <span className="text-foreground/30 group-hover:text-primary transition-colors duration-200">
-                →
-              </span>
-            </TransitionLink>
+              label="Experience"
+              viewTransitionName="experience-heading"
+            />
           </div>
         </div>
       </section>
