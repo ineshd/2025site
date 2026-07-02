@@ -2,134 +2,172 @@ import Layout from "@/app/components/Layout";
 import HeroBackground from "@/app/components/HeroBackground";
 import TransitionLink from "@/app/components/TransitionLink";
 import Link from "next/link";
-import {Github, Linkedin, Mail} from "lucide-react";
-import {metadata as layoutMetadata} from "@/app/layout";
-import {BlogPlaceholder, SplatContainer} from "@/app/components/HomePageExtras";
+import { Github, Linkedin, Mail } from "lucide-react";
+import { metadata as layoutMetadata } from "@/app/layout";
+import {
+  BlogPlaceholder,
+  SplatContainer,
+} from "@/app/components/HomePageExtras";
 
 const personSchema = {
-    "@context": "https://schema.org",
-    "@type": "Person",
-    name: "Inesh Dey",
-    url: "https://ineshd.com",
-    jobTitle: "Computer Science & Engineering Student",
-    description: layoutMetadata.description,
-    sameAs: [
-        "https://github.com/somebody4545",
-        "https://linkedin.com/in/ineshdey",
-    ],
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "Inesh Dey",
+  url: "https://ineshd.com",
+  jobTitle: "Computer Science & Engineering Student",
+  description: layoutMetadata.description,
+  sameAs: [
+    "https://github.com/somebody4545",
+    "https://linkedin.com/in/ineshdey",
+  ],
 };
 
 export const metadata = {
-    title: {
-        absolute: "Inesh Dey",
-    },
+  title: {
+    absolute: "Inesh Dey",
+  },
+  description: layoutMetadata.description,
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: "https://ineshd.com",
+    siteName: "Inesh Dey",
+    title: "Inesh Dey",
     description: layoutMetadata.description,
-    alternates: {
-        canonical: "/",
-    },
-    openGraph: {
-        type: "website",
-        locale: "en_US",
-        url: "https://ineshd.com",
-        siteName: "Inesh Dey",
-        title: "Inesh Dey",
-        description: layoutMetadata.description,
-        images: [
-            {
-                url: "/splats/splat-preview.png",
-                width: 1200,
-                height: 630,
-                alt: "Inesh Dey portfolio preview",
-            },
-        ],
-    },
-    twitter: {
-        card: "summary_large_image",
-        title: "Inesh Dey",
-        description: layoutMetadata.description,
-        images: ["/splats/splat-preview.png"],
-    },
+    images: [
+      {
+        url: "/splats/splat-preview.png",
+        width: 1200,
+        height: 630,
+        alt: "Inesh Dey portfolio preview",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Inesh Dey",
+    description: layoutMetadata.description,
+    images: ["/splats/splat-preview.png"],
+  },
 };
 
 export default function Home() {
-    return (
-        <Layout headerPosition="absolute">
-            <script
-                type="application/ld+json"
-                dangerouslySetInnerHTML={{__html: JSON.stringify(personSchema)}}
-            />
+  return (
+    <Layout headerPosition="absolute">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }}
+      />
 
-            {/* Hero */}
-            <section className="[view-transition-name:hero] relative h-screen flex flex-col justify-center items-center text-center px-8 lg:items-start lg:justify-end lg:text-left lg:px-20 lg:pb-24">
-                <HeroBackground/>
-                <div className="relative z-10 flex flex-col items-center gap-5 lg:items-start pointer-events-none">
-                    <h1 className="text-6xl max-lg:text-4xl max-sm:text-3xl font-black italic pointer-events-auto">
-                        Inesh Dey
-                    </h1>
-                    <p className="text-2xl max-lg:text-xl text-accent pointer-events-auto">
-                        University of Michigan CoE '30 | Computer Science & Engineering
-                    </p>
-                    <p className="text-xl max-lg:text-base max-w-lg leading-relaxed pointer-events-auto">
-                        I like installing software, meeting people, and winning competitions :)
-                    </p>
-                    <p className="text-md tracking-wide pointer-events-auto">
-                        try clicking the background
-                    </p>
-                    <div className="flex gap-6 mt-4 text-foreground/50 pointer-events-auto">
-                        <Link href="https://github.com/somebody4545" target="_blank" aria-label="GitHub"
-                              className="hover:text-primary transition-colors duration-200">
-                            <Github size={28}/>
-                        </Link>
-                        <Link href="https://linkedin.com/in/ineshdey" target="_blank" aria-label="LinkedIn"
-                              className="hover:text-primary transition-colors duration-200">
-                            <Linkedin size={28}/>
-                        </Link>
-                        <Link href="mailto:ineshdey@hotmail.com" aria-label="Email"
-                              className="hover:text-primary transition-colors duration-200">
-                            <Mail size={28}/>
-                        </Link>
-                    </div>
-                </div>
-                <p className="absolute bottom-12 inset-x-0 text-center text-xl text-foreground/50 tracking-wide shadow-lg pointer-events-none"><span>scroll</span></p>
-            </section>
+      {/* Hero */}
+      <section className="[view-transition-name:hero] relative h-screen flex flex-col justify-center items-center text-center px-8 lg:items-start lg:justify-end lg:text-left lg:px-20 lg:pb-24">
+        <HeroBackground />
+        <div className="relative z-10 flex flex-col items-center gap-5 lg:items-start pointer-events-none">
+          <h1 className="text-6xl max-lg:text-4xl max-sm:text-3xl font-black italic pointer-events-auto">
+            Inesh Dey
+          </h1>
+          <p className="text-2xl max-lg:text-xl text-accent pointer-events-auto">
+            University of Michigan CoE '30 | Computer Science & Engineering
+          </p>
+          <p className="text-xl max-lg:text-base max-w-lg leading-relaxed pointer-events-auto">
+            I like installing software, meeting people, and winning competitions
+            :)
+          </p>
+          <p className="text-md tracking-wide pointer-events-auto">
+            try clicking the background
+          </p>
+          <div className="flex gap-6 mt-4 text-foreground/50 pointer-events-auto">
+            <Link
+              href="https://github.com/somebody4545"
+              target="_blank"
+              aria-label="GitHub"
+              className="hover:text-primary transition-colors duration-200"
+            >
+              <Github size={28} />
+            </Link>
+            <Link
+              href="https://linkedin.com/in/ineshdey"
+              target="_blank"
+              aria-label="LinkedIn"
+              className="hover:text-primary transition-colors duration-200"
+            >
+              <Linkedin size={28} />
+            </Link>
+            <Link
+              href="mailto:ineshdey@hotmail.com"
+              aria-label="Email"
+              className="hover:text-primary transition-colors duration-200"
+            >
+              <Mail size={28} />
+            </Link>
+          </div>
+        </div>
+        <p className="absolute bottom-12 inset-x-0 text-center text-xl text-foreground/50 tracking-wide pointer-events-none">
+          <span>scroll</span>
+        </p>
+      </section>
 
-            {/* About */}
-            <section className="px-16 max-lg:px-8 pt-16 pb-28">
-                <div className="max-w-5xl mx-auto grid gap-x-16 gap-y-6 items-center
+      {/* About */}
+      <section className="px-16 max-lg:px-8 pt-16 pb-28">
+        <div
+          className="max-w-5xl mx-auto grid gap-x-16 gap-y-6 items-center
                                 grid-cols-1 [grid-template-areas:'heading'_'description'_'splat'_'actions']
-                                lg:grid-cols-[1fr_40rem] lg:[grid-template-areas:'heading_splat'_'description_splat'_'actions_splat']">
-                    <h2 className="[grid-area:heading] text-4xl max-sm:text-3xl font-black italic max-lg:text-center">About Me</h2>
-                    <p className="[grid-area:description] text-lg text-foreground/50 leading-relaxed max-w-md max-lg:mx-auto max-lg:text-center">
-                        I'm a CS &amp; Engineering student from Redmond, WA, who dabbles in 3D graphics, web development, and machine learning, using them creatively on everything from a TSA Nationals winning website or a history class. I find the same fascination in designing a UI, debugging, or tweaking a neural network at 3 AM till it works. <br/><br></br>I try to work on a variety of projects with the newest tech, and love talking about it too. I'm always down to chat; feel free to reach out!
-                    </p>
-                    <SplatContainer />
-                    <div className="[grid-area:actions] flex flex-col sm:flex-row gap-6 w-full">
-                        <TransitionLink href="/projects"
-                                        className="group flex-1 flex items-center justify-between border border-border/20 rounded-lg px-8 py-6 hover:border-primary/40 transition-colors duration-200">
-                            <span className="[view-transition-name:projects-heading] text-2xl font-black italic group-hover:text-primary transition-colors duration-200">
-                                Projects
-                            </span>
-                            <span className="text-foreground/30 group-hover:text-primary transition-colors duration-200">→</span>
-                        </TransitionLink>
-                        <TransitionLink href="/experience"
-                                        className="group flex-1 flex items-center justify-between border border-border/20 rounded-lg px-8 py-6 hover:border-primary/40 transition-colors duration-200">
-                            <span className="[view-transition-name:experience-heading] text-2xl font-black italic group-hover:text-primary transition-colors duration-200">
-                                Experience
-                            </span>
-                            <span className="text-foreground/30 group-hover:text-primary transition-colors duration-200">→</span>
-                        </TransitionLink>
-                    </div>
-                </div>
-            </section>
+                                lg:grid-cols-[1fr_40rem] lg:[grid-template-areas:'heading_splat'_'description_splat'_'actions_splat']"
+        >
+          <h2 className="[grid-area:heading] text-4xl max-sm:text-3xl font-black italic max-lg:text-center">
+            About Me
+          </h2>
+          <p className="[grid-area:description] text-lg text-foreground/50 leading-relaxed max-w-md max-lg:mx-auto max-lg:text-center">
+            I'm a CS &amp; Engineering student from Redmond, WA, who dabbles in
+            3D graphics, web development, and machine learning, using them
+            creatively on everything from a TSA Nationals winning website or a
+            history class. I find the same fascination in designing a UI,
+            debugging, or tweaking a neural network at 3 AM till it works.{" "}
+            <br />
+            <br></br>I try to work on a variety of projects with the newest
+            tech, and love talking about it too. I'm always down to chat; feel
+            free to reach out!
+          </p>
+          <SplatContainer />
+          <div className="[grid-area:actions] flex flex-col sm:flex-row gap-6 w-full">
+            <TransitionLink
+              href="/projects"
+              className="group flex-1 flex items-center justify-between border border-border/20 rounded-lg px-8 py-6 hover:border-primary/40 transition-colors duration-200"
+            >
+              <span className="[view-transition-name:projects-heading] text-2xl font-black italic group-hover:text-primary transition-colors duration-200">
+                Projects
+              </span>
+              <span className="text-foreground/30 group-hover:text-primary transition-colors duration-200">
+                →
+              </span>
+            </TransitionLink>
+            <TransitionLink
+              href="/experience"
+              className="group flex-1 flex items-center justify-between border border-border/20 rounded-lg px-8 py-6 hover:border-primary/40 transition-colors duration-200"
+            >
+              <span className="[view-transition-name:experience-heading] text-2xl font-black italic group-hover:text-primary transition-colors duration-200">
+                Experience
+              </span>
+              <span className="text-foreground/30 group-hover:text-primary transition-colors duration-200">
+                →
+              </span>
+            </TransitionLink>
+          </div>
+        </div>
+      </section>
 
-            {/* Blog */}
-            <section className="px-16 max-lg:px-8 pb-28">
-                <div className="max-w-5xl mx-auto border border-border/20 rounded-lg px-10 py-16 text-center">
-                    <h2 className="text-3xl max-sm:text-2xl font-black italic mb-3">Blog</h2>
-                    <BlogPlaceholder />
-                </div>
-            </section>
-
-        </Layout>
-    );
+      {/* Blog */}
+      <section className="px-16 max-lg:px-8 pb-28">
+        <div className="max-w-5xl mx-auto border border-border/20 rounded-lg px-10 py-16 text-center">
+          <h2 className="text-3xl max-sm:text-2xl font-black italic mb-3">
+            Blog
+          </h2>
+          <BlogPlaceholder />
+        </div>
+      </section>
+    </Layout>
+  );
 }
