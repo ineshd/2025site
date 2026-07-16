@@ -15,7 +15,7 @@ const experiments = [
     {
         name: "3D Glass Thingy",
         description: "A Three.js experiment with real-time 3D rendering, custom materials, and WebGL shader effects running entirely in the browser.",
-        href: "https://github.com/somebody4545/3dglassthingy",
+        href: "https://github.com/ineshd/3dglassthingy",
         external: true,
     },
     {

@@ -63,7 +63,7 @@ export const BlogPlaceholder = memo(function BlogPlaceholder() {
         return (
             <div className="mt-8 flex justify-center overflow-hidden rounded-lg">
                 <iframe
-                    src="https://somebody4545.substack.com/embed?embedId=somebody4545"
+                    src="https://ineshd.substack.com/embed?embedId=ineshd"
                     width="720"
                     height="420"
                     style={{border: "1px solid #EEE", background: "white", maxWidth: "100%"}}

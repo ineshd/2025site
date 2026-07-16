@@ -11,14 +11,14 @@ const projects = [
         period: "Winter 2025",
         description: "1st place at Washington TSA State 2025, then went on to win at the TSA National Conference. Full-stack Next.js competition site built and presented under contest conditions.",
         tags: ["TypeScript", "Next.js"],
-        href: "https://github.com/somebody4545/TSA-Webmaster-2025",
+        href: "https://github.com/ineshd/TSA-Webmaster-2025",
     },
     {
         name: "Smart Garden Pi",
         period: "Summer 2025",
         description: "IoT smart garden controller on Raspberry Pi. Automated watering, sensor data logging, and a web dashboard.",
         tags: ["TypeScript", "Raspberry Pi", "IoT"],
-        href: "https://github.com/somebody4545/Smart-Garden-Pi",
+        href: "https://github.com/ineshd/Smart-Garden-Pi",
     },
     {
         name: "EcoCollab",
@@ -39,14 +39,14 @@ const projects = [
         period: "Fall 2023",
         description: "Python utility for matching brightness across monitors and a software-based dynamic contrast ratio implementation.",
         tags: ["Python", "DCR"],
-        href: "https://github.com/somebody4545/multimonitortools",
+        href: "https://github.com/ineshd/multimonitortools",
     },
     {
         name: "Raspberry Pi Stripe Demo",
         period: "Summer 2023",
         description: "Stripe payment integration on a Raspberry Pi using Flask, the Stripe API, and uWSGI. A low-stakes experiment in self-hosted e-commerce.",
         tags: ["Python", "Flask", "Stripe", "Raspberry Pi"],
-        href: "https://github.com/somebody4545/Raspberry-Pi-Stripe-Demo",
+        href: "https://github.com/ineshd/Raspberry-Pi-Stripe-Demo",
     },
 ];
 

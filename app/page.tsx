@@ -17,7 +17,7 @@ const personSchema = {
   jobTitle: "Computer Science & Engineering Student",
   description: layoutMetadata.description,
   sameAs: [
-    "https://github.com/somebody4545",
+    "https://github.com/ineshd",
     "https://linkedin.com/in/ineshdey",
   ],
 };
@@ -81,7 +81,7 @@ export default function Home() {
           </p>
           <div className="flex gap-6 mt-4 text-foreground/50 pointer-events-auto">
             <Link
-              href="https://github.com/somebody4545"
+              href="https://github.com/ineshd"
               target="_blank"
               aria-label="GitHub"
               className="hover:text-primary transition-colors duration-200"
