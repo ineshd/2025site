@@ -3,23 +3,51 @@
 import Layout from "@/app/components/Layout";
 import FullScreen4545Grid from "@/app/components/FullScreen4545Grid";
 import { Link2 } from "lucide-react";
+import type { ReactNode } from "react";
 
-const experience = [
+type Experience = {
+    org: string;
+    role: string;
+    period: string;
+    desc?: string;
+    hasModel?: boolean;
+    href?: string;
+};
+
+const experience: Experience[] = [
     {
-        org: "SUAS @STEM",
-        role: "Lead Software Engineer, Project Manager, & Web Developer",
-        period: "Oct 2025 – Present",
-        desc: "Drone control and automated imaging with Ardupilot + YOLO. Custom ground control systems. Team website design and development.",
-        hasModel: true,
-        href: "https://www.suasstem.org/",
+        org: "UMich NERS — RHE Lab",
+        role: "Undergraduate Research Assistant",
+        period: "Oct 2026 – Present",
+        href: "https://ners.engin.umich.edu/",
+    },
+    {
+        org: "Michigan Autonomous Aerial Vehicles",
+        role: "Member, Software Subteam",
+        period: "Sep 2026 – Present",
+        href: "https://maavumich.org/",
+    },
+    {
+        org: "UM Autonomous Robotic Vehicle",
+        role: "Member, Computer Vision Subteam",
+        period: "Sep 2026 – Present",
+        href: "https://www.umarv.com/",
     },
     {
         org: "USC i-MAPS",
         role: "Research Intern",
-        period: "Apr 2025 – Present",
+        period: "Apr 2026 – Sep 2026",
         desc: "Accessible digital twins and physics-based neural networks at the University of South Carolina.",
         hasModel: true,
         href: "https://sc.edu/study/colleges_schools/engineering_and_computing/research/research_directory/banerjee_imaps.php",
+    },
+    {
+        org: "SUAS @STEM",
+        role: "Software Subsystem Lead, Field Ops Member, & Lead Web Developer",
+        period: "Oct 2025 – Jun 2026",
+        desc: "2nd place among first-time US teams at the collegiate AUVSI SUAS competition. Drone control and automated imaging with Ardupilot + YOLO. Custom ground control systems. Team website design and development.",
+        hasModel: true,
+        href: "https://www.suasstem.org/",
     },
     {
         org: "Tesla STEM TSA",
@@ -55,6 +83,16 @@ const experience = [
     },
 ];
 
+const itemClassName = "group relative flex items-center gap-12 max-lg:flex-col max-lg:items-stretch";
+
+function ExperienceItem({ href, children }: { href?: string; children: ReactNode }) {
+    return href ? (
+        <a href={href} target="_blank" rel="noopener noreferrer" className={itemClassName}>{children}</a>
+    ) : (
+        <div className={itemClassName}>{children}</div>
+    );
+}
+
 export default function ExperiencePageClient() {
     return (
         <Layout>
@@ -66,17 +104,16 @@ export default function ExperiencePageClient() {
                     </h1>
                     <div className="flex flex-col gap-16">
                         {experience.map((item) => (
-                            <a key={item.org} href={item.href} target="_blank" rel="noopener noreferrer"
-                               className="group relative flex items-center gap-12 max-lg:flex-col max-lg:items-stretch">
+                            <ExperienceItem key={item.org} href={item.href}>
                                 {/* TODO: org logo / 3D model goes here when item.hasModel, e.g.
                                 {item.hasModel && (
                                     <div className="w-full lg:w-80 h-52 shrink-0 rounded-lg bg-blue-950/60 border border-blue-400/10 group-hover:border-primary/40 transition-colors duration-200"/>
                                 )}
                                 */}
-                                <p className="hidden sm:flex absolute top-6 right-8 items-center gap-1.5 text-sm text-foreground/30 tracking-wide truncate max-w-[40%] group-hover:text-primary/60 transition-colors duration-200">
+                                {item.href && <p className="hidden sm:flex absolute top-6 right-8 items-center gap-1.5 text-sm text-foreground/30 tracking-wide truncate max-w-[40%] group-hover:text-primary/60 transition-colors duration-200">
                                     <Link2 size={14} className="shrink-0"/>
                                     {item.href}
-                                </p>
+                                </p>}
                                 <div className="flex-1">
                                     <h3 className="text-2xl max-sm:text-xl font-bold mb-1 group-hover:text-primary transition-colors duration-200">
                                         {item.org}
@@ -85,15 +122,15 @@ export default function ExperiencePageClient() {
                                     <p className="text-base text-foreground/50 leading-relaxed mb-2">
                                         {item.role}
                                     </p>
-                                    <p className="text-base text-foreground/50 leading-relaxed">
+                                    {item.desc && <p className="text-base text-foreground/50 leading-relaxed">
                                         {item.desc}
-                                    </p>
-                                    <p className="sm:hidden mt-4 flex items-center gap-1.5 text-xs text-foreground/30 tracking-wide truncate break-all group-hover:text-primary/60 transition-colors duration-200">
+                                    </p>}
+                                    {item.href && <p className="sm:hidden mt-4 flex items-center gap-1.5 text-xs text-foreground/30 tracking-wide truncate break-all group-hover:text-primary/60 transition-colors duration-200">
                                         <Link2 size={12} className="shrink-0"/>
                                         {item.href}
-                                    </p>
+                                    </p>}
                                 </div>
-                            </a>
+                            </ExperienceItem>
                         ))}
                     </div>
                 </div>
