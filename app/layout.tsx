@@ -1,5 +1,5 @@
 import type {Metadata} from "next";
-import {Asap, Geist_Mono, Montserrat} from "next/font/google";
+import {Asap, Montserrat, Roboto_Mono} from "next/font/google";
 import {ViewTransitionProvider} from "@/app/components/ViewTransitionProvider";
 import {Analytics} from "@vercel/analytics/next";
 import "./globals.css";
@@ -12,8 +12,8 @@ const asap = Asap({
     subsets: ["latin"],
 });
 
-const geistMono = Geist_Mono({
-    variable: "--font-geist-mono",
+const robotoMono = Roboto_Mono({
+    variable: "--font-roboto-mono",
     subsets: ["latin"],
 });
 
@@ -65,11 +65,11 @@ export default function RootLayout({
             {/* Subset to just the icons used on the site; add names here (alphabetical) as needed. */}
             <link
                 rel="stylesheet"
-                href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=arrow_forward&display=block"
+                href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=arrow_downward,arrow_forward,arrow_upward&display=block"
             />
         </head>
         <body
-            className={`${asap.variable} ${geistMono.variable} ${montserrat.variable} antialiased`}
+            className={`${asap.variable} ${robotoMono.variable} ${montserrat.variable} antialiased`}
         >
         <ViewTransitionProvider>
             {children}

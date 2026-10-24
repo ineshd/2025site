@@ -1,6 +1,7 @@
 import Layout from "@/app/components/Layout";
 import HeroBackground from "@/app/components/HeroBackground";
 import NavCardLink from "@/app/components/NavCardLink";
+import AwardsWheel, { type AwardGroup } from "@/app/components/AwardsWheel";
 import Link from "next/link";
 import { Github, Linkedin, Mail } from "lucide-react";
 import { metadata as layoutMetadata } from "@/app/layout";
@@ -8,6 +9,67 @@ import {
   BlogPlaceholder,
   SplatContainer,
 } from "@/app/components/HomePageExtras";
+
+// From LinkedIn Honors & Awards, plus the SUAS and SmartHack results described on
+// the Experience and Projects pages. Grouped by competition.
+const awardGroups: AwardGroup[] = [
+  {
+    name: "SUAS Internationals",
+    fullName: "Student Unmanned Aerial Systems (SUAS) Competition, 2026 Internationals",
+    meta: "Association for Uncrewed Vehicle Systems International · with SUAS @STEM · Jun 2026",
+    items: [
+      { title: "2nd Place Among First-Time US Teams, 26th Overall", detail: "In a field dominated by university teams" },
+    ],
+  },
+  {
+    name: "TSA Nationals",
+    fullName: "Technology Student Association (TSA) National Conference",
+    meta: "Jul 2025",
+    items: [
+      { title: "1st Place, Webmaster", detail: "Out of ~450 national submissions; designed and built a restaurant website (Maitso)" },
+      { title: "6th Place, Engineering Design", detail: "Internet of Things nitrogen management system with an Android app, mixing nutrients via the Venturi effect" },
+      { title: "5th Place, Technology Bowl", detail: "Quarterfinals of the tech quiz bowl bracket" },
+    ],
+  },
+  {
+    name: "Washington TSA",
+    fullName: "Washington Technology Student Association State Conference",
+    meta: "Apr 2025",
+    items: [
+      { title: "1st Place, Software Development" },
+      { title: "1st Place, Webmaster" },
+      { title: "3rd Place, Engineering Design" },
+      { title: "Quarterfinals, Technology Bowl" },
+    ],
+  },
+  {
+    name: "FIRST Tech Challenge",
+    fullName: "FIRST Tech Challenge Robotics",
+    meta: "Team 19669 Systematic Chaos · 2024–25",
+    items: [
+      { title: "Design Award", detail: "Washington State Championship · Feb 2025" },
+      { title: "Design Award", detail: "Asimov Semifinal · Jan 2025" },
+      { title: "Control Award", detail: "Tesla Interleague · Dec 2024" },
+    ],
+  },
+  {
+    name: "WTN Science Contest",
+    fullName: "Washington Tracking Network (WTN) Youth Science Contest",
+    meta: "Washington State Department of Health",
+    items: [
+      { title: "2nd Place, Group Science Communication", detail: "The Opioid Epidemic, an interactive Three.js story · May 2025" },
+      { title: "2nd Place, Group Science Communication", detail: "Teen Mental Health in Washington · May 2024" },
+    ],
+  },
+  {
+    name: "More Honors",
+    meta: "2024–26",
+    items: [
+      { title: "Selected Attendee, Y Combinator Startup School San Francisco", detail: "Jul 2026" },
+      { title: "\"Outstanding Code\" Award", detail: "EmP Hackfest SmartHack, sponsored by Art of Problem Solving, for EcoCollab · 2024" },
+    ],
+  },
+];
 
 const personSchema = {
   "@context": "https://schema.org",
@@ -157,6 +219,14 @@ export default function Home() {
                   />
                 </div>
               </div>
+            </section>
+
+            {/* Awards */}
+            <section className="px-12 max-lg:px-6 py-16">
+              <h2 className="text-4xl max-sm:text-3xl font-black mb-4 max-lg:text-center">
+                Awards
+              </h2>
+              <AwardsWheel groups={awardGroups} />
             </section>
 
             {/* Blog */}

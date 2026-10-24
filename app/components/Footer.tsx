@@ -66,7 +66,7 @@ const Barcode = ({className}: { className?: string }) => {
             {UPC_DIGITS.map((d, i) => (
                 <text key={i} x={digitX(i)} y={i === 0 || i === 11 ? 66 : 68.5} textAnchor="middle"
                       fontSize={i === 0 || i === 11 ? 6 : 8}
-                      className="fill-background font-[family-name:var(--font-geist-mono)]">
+                      className="fill-background font-[family-name:var(--font-roboto-mono)]">
                     {d}
                 </text>
             ))}
@@ -135,7 +135,7 @@ const Footer = () => {
             </div>
             {/* Side-by-side layout: a green panel with a slanted left edge, bleeding to the
                 footer's top, bottom and right edges (overshoot clipped by the footer). */}
-            <div className="relative flex flex-col justify-between gap-6 lg:items-end lg:-my-4 lg:-mr-4 lg:py-4 lg:pr-4 lg:pl-14 lg:text-background font-[family-name:var(--font-geist-mono)]">
+            <div className="relative flex flex-col justify-between gap-6 lg:items-end lg:-my-4 lg:-mr-4 lg:py-4 lg:pr-4 lg:pl-14 lg:text-background font-[family-name:var(--font-roboto-mono)]">
                 <span aria-hidden="true" className="hidden lg:block absolute inset-y-0 left-0 -right-16 -skew-x-12 bg-primary shadow-[inset_0_10px_12px_-10px_rgb(0_0_0/0.6)]"/>
                 <div className="relative flex flex-col gap-2 lg:items-end">
                     <p>my time is {myTime ?? "--:--"}</p>
