@@ -116,7 +116,7 @@ const Header = ({position = 'sticky'}: HeaderProps) => {
                                         <TransitionLink key={link.href} href={link.href}
                                                         onClick={() => setMenuOpen(false)}
                                                         className="group relative px-8 py-4 text-lg font-medium">
-                                            <span className="absolute inset-y-0 left-0 w-px -skew-x-12 bg-border/30 group-hover:w-full group-hover:bg-primary transition-all duration-300 ease-out"/>
+                                            <span className="absolute inset-y-0 -left-4 w-px -skew-x-12 bg-border/30 group-hover:w-[calc(100%+2rem)] group-hover:bg-primary transition-all duration-300 ease-out"/>
                                             <span className="relative group-hover:text-background transition-colors duration-300">
                                                 {link.label}
                                             </span>
