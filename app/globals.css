@@ -90,10 +90,8 @@ h1, h2, h3,
         @apply border-border;
     }
 
-    /* The root background is what shows when overscrolling past either end:
-       halfway between the header/footer color and the page background. */
     html {
-        background-color: color-mix(in oklab, var(--color-muted), var(--color-background));
+        background-color: color-mix(in oklab, var(--color-muted) 88%, var(--color-background));
     }
 
     body {
