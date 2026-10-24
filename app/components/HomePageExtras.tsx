@@ -24,21 +24,19 @@ export const SplatContainer = memo(function SplatContainer() {
               priority={false}
             />
 
-            <div className="relative z-10 p-10 perspective-distant hover:perspective-near transition-[perspective] duration-500 ease-out">
-              <button
-                type="button"
-                onMouseDown={(e) => {
-                  e.currentTarget.blur();
-                  setSplatLoaded(true);
-                }}
-                className="active:scale-0 px-8 py-4 border border-border/20 rounded-full text-foreground/70 bg-background/60 backdrop-blur-sm shadow-md
-                           transform-3d rotate-y-0 will-change-transform
-                           transition-all duration-500 ease-out
-                           hover:rotate-y-25 hover:scale-90 hover:border-primary/40 hover:text-foreground hover:shadow-xl"
-              >
-                Load 3D model
-              </button>
-            </div>
+            {/* Straight-edged green button over the preview; on hover blue sweeps in
+                with a slanted leading edge (overshoot clipped by overflow-hidden). */}
+            <button
+              type="button"
+              onMouseDown={(e) => {
+                e.currentTarget.blur();
+                setSplatLoaded(true);
+              }}
+              className="group relative z-10 w-fit overflow-hidden px-8 py-4 bg-primary text-background text-xl font-black shadow-md active:brightness-90 transition-[filter] duration-200"
+            >
+              <span aria-hidden="true" className="absolute inset-y-0 -left-4 w-0 -skew-x-12 bg-secondary group-hover:w-[calc(100%+2rem)] transition-all duration-300 ease-out"/>
+              <span className="relative">Load 3D model</span>
+            </button>
           </div>
         )}
       </div>

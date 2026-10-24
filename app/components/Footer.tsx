@@ -119,7 +119,7 @@ const Footer = () => {
         // Sticks to the bottom of the viewport underneath <main> (z-10 in Layout),
         // so it's uncovered as the content scrolls past the end of the page. The
         // inset shadow reads as the content's edge casting onto it.
-        <footer className="sticky bottom-0 z-0 bg-muted text-primary p-4 flex flex-col-reverse lg:flex-row lg:justify-between gap-6
+        <footer className="sticky bottom-0 z-0 overflow-hidden bg-muted text-primary p-4 flex flex-col-reverse lg:flex-row lg:justify-between gap-6
                            shadow-[inset_0_10px_12px_-10px_rgb(0_0_0/0.6)]">
             {/* Barcode in the corner like on real packaging: leftmost on wider
                 screens, below the squares (flex-col-reverse) on phones. */}
@@ -133,22 +133,25 @@ const Footer = () => {
                     )}
                 </div>
             </div>
-            <div className="flex flex-col justify-between gap-6 lg:items-end font-[family-name:var(--font-geist-mono)]">
-                <div className="flex flex-col gap-2 lg:items-end">
+            {/* Side-by-side layout: a green panel with a slanted left edge, bleeding to the
+                footer's top, bottom and right edges (overshoot clipped by the footer). */}
+            <div className="relative flex flex-col justify-between gap-6 lg:items-end lg:-my-4 lg:-mr-4 lg:py-4 lg:pr-4 lg:pl-14 lg:text-background font-[family-name:var(--font-geist-mono)]">
+                <span aria-hidden="true" className="hidden lg:block absolute inset-y-0 left-0 -right-16 -skew-x-12 bg-primary shadow-[inset_0_10px_12px_-10px_rgb(0_0_0/0.6)]"/>
+                <div className="relative flex flex-col gap-2 lg:items-end">
                     <p>my time is {myTime ?? "--:--"}</p>
-                    {topTrack && <p className="text-foreground/50 lowercase">my top track this week: {topTrack.title} by {topTrack.artist}</p>}
-                    <nav className="flex flex-wrap gap-x-4 gap-y-1 text-foreground/50">
+                    {topTrack && <p className="text-foreground/50 lg:text-background/70 lowercase">my top track this week: {topTrack.title} by {topTrack.artist}</p>}
+                    <nav className="flex flex-wrap gap-x-4 gap-y-1 text-foreground/50 lg:text-background/70">
                         {LINKS.map((link) => (
                             <a key={link.label} href={link.href}
                                target={link.href.startsWith("http") ? "_blank" : undefined}
                                rel={link.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                               className="hover:text-primary transition-colors duration-200">
+                               className="-mx-1 px-1 hover:bg-primary hover:text-background active:bg-secondary lg:hover:bg-secondary lg:active:brightness-90 transition-colors duration-200">
                                 {link.label}
                             </a>
                         ))}
                     </nav>
                 </div>
-                <p>&copy; {new Date().getFullYear()} Inesh Dey</p>
+                <p className="relative">&copy; {new Date().getFullYear()} Inesh Dey</p>
             </div>
         </footer>
     );

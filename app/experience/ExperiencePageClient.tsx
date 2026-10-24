@@ -83,7 +83,7 @@ const experience: Experience[] = [
     },
 ];
 
-const itemClassName = "group relative flex items-center gap-12 max-lg:flex-col max-lg:items-stretch";
+const itemClassName = "group relative flex items-center gap-12 max-lg:flex-col max-lg:items-stretch -mx-6 px-6 py-6 hover:bg-primary active:bg-secondary transition-colors duration-200";
 
 function ExperienceItem({ href, children }: { href?: string; children: ReactNode }) {
     return href ? (
@@ -102,7 +102,7 @@ export default function ExperiencePageClient() {
                     <h1 className="[view-transition-name:experience-heading] text-5xl max-lg:text-4xl max-sm:text-3xl font-black mb-14">
                         Experience
                     </h1>
-                    <div className="flex flex-col gap-16">
+                    <div className="flex flex-col gap-4">
                         {experience.map((item) => (
                             <ExperienceItem key={item.org} href={item.href}>
                                 {/* TODO: org logo / 3D model goes here when item.hasModel, e.g.
@@ -110,22 +110,22 @@ export default function ExperiencePageClient() {
                                     <div className="w-full lg:w-80 h-52 shrink-0 rounded-lg bg-blue-950/60 border border-blue-400/10 group-hover:border-primary/40 transition-colors duration-200"/>
                                 )}
                                 */}
-                                {item.href && <p className="hidden sm:flex absolute top-6 right-8 items-center gap-1.5 text-sm text-foreground/30 tracking-wide truncate max-w-[40%] group-hover:text-primary/60 transition-colors duration-200">
+                                {item.href && <p className="hidden sm:flex absolute top-6 right-8 items-center gap-1.5 text-sm text-foreground/30 tracking-wide truncate max-w-[40%] group-hover:text-background/70 transition-colors duration-200">
                                     <Link2 size={14} className="shrink-0"/>
                                     {item.href}
                                 </p>}
                                 <div className="flex-1">
-                                    <h3 className="text-2xl max-sm:text-xl font-bold mb-1 group-hover:text-primary transition-colors duration-200">
+                                    <h3 className="text-2xl max-sm:text-xl font-bold mb-1 group-hover:text-background transition-colors duration-200">
                                         {item.org}
                                     </h3>
-                                    <p className="text-sm text-foreground/30 tracking-wide mb-3">{item.period}</p>
-                                    <p className="text-base text-foreground/50 leading-relaxed mb-2">
+                                    <p className="text-sm text-foreground/30 tracking-wide mb-3 group-hover:text-background/70">{item.period}</p>
+                                    <p className="text-base text-foreground/50 leading-relaxed mb-2 group-hover:text-background/80">
                                         {item.role}
                                     </p>
-                                    {item.desc && <p className="text-base text-foreground/50 leading-relaxed">
+                                    {item.desc && <p className="text-base text-foreground/50 leading-relaxed group-hover:text-background/80">
                                         {item.desc}
                                     </p>}
-                                    {item.href && <p className="sm:hidden mt-4 flex items-center gap-1.5 text-xs text-foreground/30 tracking-wide truncate break-all group-hover:text-primary/60 transition-colors duration-200">
+                                    {item.href && <p className="sm:hidden mt-4 flex items-center gap-1.5 text-xs text-foreground/30 tracking-wide truncate break-all group-hover:text-background/70 transition-colors duration-200">
                                         <Link2 size={12} className="shrink-0"/>
                                         {item.href}
                                     </p>}

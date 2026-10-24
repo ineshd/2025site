@@ -59,22 +59,22 @@ export default function ProjectsPageClient() {
                     <h1 className="[view-transition-name:projects-heading] text-5xl max-lg:text-4xl max-sm:text-3xl font-black mb-14">
                         Projects
                     </h1>
-                    <div className="flex flex-col gap-16">
+                    <div className="flex flex-col gap-4">
                         {projects.map((project) => (
                             <Link key={project.name} href={project.href} target="_blank"
-                                  className="group flex items-center gap-12 max-lg:flex-col max-lg:items-stretch">
+                                  className="group flex items-center gap-12 max-lg:flex-col max-lg:items-stretch -mx-6 px-6 py-6 hover:bg-primary active:bg-secondary transition-colors duration-200">
                                 {/* TODO: project preview image / 3D model goes here, e.g.
                                 <div className="w-full lg:w-80 h-52 shrink-0 rounded-lg bg-blue-950/60 border border-blue-400/10 group-hover:border-primary/40 transition-colors duration-200"/>
                                 */}
                                 <div className="flex-1">
-                                    <h3 className="text-2xl max-sm:text-xl font-bold mb-1 group-hover:text-primary transition-colors duration-200">
+                                    <h3 className="text-2xl max-sm:text-xl font-bold mb-1 group-hover:text-background transition-colors duration-200">
                                         {project.name}
                                     </h3>
-                                    <p className="text-sm text-foreground/30 tracking-wide mb-3">{project.period}</p>
-                                    <p className="text-base text-foreground/50 leading-relaxed">
+                                    <p className="text-sm text-foreground/30 tracking-wide mb-3 group-hover:text-background/70">{project.period}</p>
+                                    <p className="text-base text-foreground/50 leading-relaxed group-hover:text-background/80">
                                         {project.description}
                                     </p>
-                                    <p className="flex items-center gap-1.5 text-sm text-foreground/30 tracking-wide mt-3 truncate group-hover:text-primary/60 transition-colors duration-200">
+                                    <p className="flex items-center gap-1.5 text-sm text-foreground/30 tracking-wide mt-3 truncate group-hover:text-background/70 transition-colors duration-200">
                                         <Link2 size={14} className="shrink-0"/>
                                         {project.href.replace(/^https?:\/\//, "")}
                                     </p>

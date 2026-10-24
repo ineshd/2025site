@@ -14,21 +14,24 @@ export default function NavCardLink({
   return (
     <TransitionLink
       href={href}
-      className="rounded-full group flex-1 flex items-center justify-between border border-border/20 px-8 py-6 hover:bg-primary hover:border-primary/40 transition-colors duration-200"
+      className="group relative flex-1 flex items-center justify-between text-background px-8 py-6 active:brightness-90 transition-[filter] duration-200"
     >
+      {/* Slanted green tab at rest; blue sweeps across it on hover (matches the header nav). */}
+      <span aria-hidden="true" className="absolute inset-0 -skew-x-12 bg-primary" />
+      <span aria-hidden="true" className="absolute inset-y-0 left-0 w-0 -skew-x-12 bg-secondary group-hover:w-full transition-all duration-300 ease-out" />
       <span
         style={
           viewTransitionName
             ? ({ viewTransitionName } as React.CSSProperties)
             : undefined
         }
-        className="text-2xl font-black group-hover:text-background transition-colors duration-200"
+        className="relative text-2xl font-black"
       >
         {label}
       </span>
       <span
         aria-hidden="true"
-        className="material-symbols-rounded text-foreground/30 group-hover:text-background transition-colors duration-200 ml-4"
+        className="relative material-symbols-rounded text-background/60 ml-4"
       >
         arrow_forward
       </span>

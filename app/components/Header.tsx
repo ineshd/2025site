@@ -80,15 +80,17 @@ const Header = ({position = 'sticky'}: HeaderProps) => {
                         <span className={"text-xs text-muted-foreground -mt-2"}>v1.2</span>
                     </div>
                 </TransitionLink>
-                <nav className="max-lg:hidden flex ml-auto mr-16 items-center text-base font-medium">
+                <nav className="max-lg:hidden flex ml-auto mr-16 gap-3 items-center text-base font-medium">
                   {navLinks.map((link) => (
                     <TransitionLink
                       key={link.href}
                       href={link.href}
-                      className="group relative px-5 py-2"
+                      className="group relative px-5 py-2 text-background active:brightness-90 transition-[filter] duration-200"
                     >
-                      <span className="absolute inset-y-0 left-0 w-px -skew-x-12 bg-border/30 group-hover:w-full group-hover:bg-primary transition-all duration-300 ease-out" />
-                      <span className="relative group-hover:text-background transition-colors duration-300">
+                      {/* Slanted green tab at rest; blue sweeps across it on hover. */}
+                      <span className="absolute inset-0 -skew-x-12 bg-primary" />
+                      <span className="absolute inset-y-0 left-0 w-0 -skew-x-12 bg-secondary group-hover:w-full transition-all duration-300 ease-out" />
+                      <span className="relative">
                         {link.label}
                       </span>
                     </TransitionLink>
@@ -98,7 +100,7 @@ const Header = ({position = 'sticky'}: HeaderProps) => {
                                     aria-label={menuOpen ? "Close menu" : "Open menu"}
                                     aria-expanded={menuOpen}
                                     className="group relative hidden max-lg:flex ml-auto p-2">
-                                <span className="absolute inset-y-0 left-0 w-full bg-background group-hover:w-full rounded-full group-hover:bg-primary transition-all duration-300 ease-out"/>
+                                <span className="absolute inset-y-0 left-0 w-full bg-background group-hover:w-full rounded-full group-hover:bg-primary group-active:bg-secondary transition-all duration-300 ease-out"/>
                                 <span className="relative group-hover:text-background transition-colors duration-300">
                                     {menuOpen ? <X size={24}/> : <Menu size={24}/>}
                                 </span>
@@ -116,7 +118,7 @@ const Header = ({position = 'sticky'}: HeaderProps) => {
                                         <TransitionLink key={link.href} href={link.href}
                                                         onClick={() => setMenuOpen(false)}
                                                         className="group relative px-8 py-4 text-lg font-medium">
-                                            <span className="absolute inset-y-0 -left-4 w-px -skew-x-12 bg-border/30 group-hover:w-[calc(100%+2rem)] group-hover:bg-primary transition-all duration-300 ease-out"/>
+                                            <span className="absolute inset-y-0 -left-4 w-px -skew-x-12 bg-border/30 group-hover:w-[calc(100%+2rem)] group-hover:bg-primary group-active:bg-secondary transition-all duration-300 ease-out"/>
                                             <span className="relative group-hover:text-background transition-colors duration-300">
                                                 {link.label}
                                             </span>

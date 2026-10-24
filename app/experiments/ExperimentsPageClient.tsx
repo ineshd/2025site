@@ -26,7 +26,7 @@ const experiments = [
     },
 ];
 
-const cardClassName = "group relative block border border-border/20 rounded-lg px-8 py-6 hover:border-primary/40 transition-colors duration-200";
+const cardClassName = "group relative block rounded-lg px-8 py-6 hover:bg-primary hover:border-primary active:bg-secondary active:border-secondary transition-colors duration-200";
 
 export default function ExperimentsPageClient() {
     return (
@@ -43,17 +43,17 @@ export default function ExperimentsPageClient() {
                         const url = item.href.replace(/^https?:\/\//, "");
                         const content = (
                             <>
-                                <p className="hidden sm:flex absolute top-6 right-8 items-center gap-1.5 text-sm text-foreground/30 tracking-wide truncate max-w-[40%] group-hover:text-primary/60 transition-colors duration-200">
+                                <p className="hidden sm:flex absolute top-6 right-8 items-center gap-1.5 text-sm text-foreground/30 tracking-wide truncate max-w-[40%] group-hover:text-background/70 transition-colors duration-200">
                                     <Link2 size={14} className="shrink-0"/>
                                     {url}
                                 </p>
-                                <h3 className="text-2xl font-bold mb-1 pr-4 group-hover:text-primary transition-colors duration-200">
+                                <h3 className="text-2xl font-bold mb-1 pr-4 group-hover:text-background transition-colors duration-200">
                                     {item.name}
                                 </h3>
-                                <p className="text-base text-foreground/50 leading-relaxed">
+                                <p className="text-base text-foreground/50 leading-relaxed group-hover:text-background/80">
                                     {item.description}
                                 </p>
-                                <p className="flex sm:hidden items-center gap-1.5 text-sm text-foreground/30 tracking-wide mt-3 truncate group-hover:text-primary/60 transition-colors duration-200">
+                                <p className="flex sm:hidden items-center gap-1.5 text-sm text-foreground/30 tracking-wide mt-3 truncate group-hover:text-background/70 transition-colors duration-200">
                                     <Link2 size={14} className="shrink-0"/>
                                     {url}
                                 </p>

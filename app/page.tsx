@@ -78,7 +78,7 @@ export default function Home() {
           <h1 className="text-6xl max-lg:text-4xl max-sm:text-3xl font-black italic pointer-events-auto">
             Inesh Dey
           </h1>
-          <p className="text-2xl max-lg:text-xl text-accent pointer-events-auto">
+          <p className="text-2xl max-lg:text-xl text-primary pointer-events-auto">
             University of Michigan CoE '30 | Computer Science & Engineering
           </p>
           <p className="text-xl max-lg:text-base max-w-lg leading-relaxed pointer-events-auto">
@@ -93,7 +93,7 @@ export default function Home() {
               href="https://github.com/ineshd"
               target="_blank"
               aria-label="GitHub"
-              className="hover:text-primary transition-colors duration-200"
+              className="block p-1.5 hover:bg-primary hover:text-background active:bg-secondary transition-colors duration-200"
             >
               <Github size={28} />
             </Link>
@@ -101,14 +101,14 @@ export default function Home() {
               href="https://linkedin.com/in/ineshdey"
               target="_blank"
               aria-label="LinkedIn"
-              className="hover:text-primary transition-colors duration-200"
+              className="block p-1.5 hover:bg-primary hover:text-background active:bg-secondary transition-colors duration-200"
             >
               <Linkedin size={28} />
             </Link>
             <Link
               href="mailto:me@ineshd.com"
               aria-label="Email"
-              className="hover:text-primary transition-colors duration-200"
+              className="block p-1.5 hover:bg-primary hover:text-background active:bg-secondary transition-colors duration-200"
             >
               <Mail size={28} />
             </Link>
@@ -121,7 +121,7 @@ export default function Home() {
 
         {/* About + Blog: joined cards scrolling over the pinned background */}
         <div className="relative px-8 max-lg:px-4 pt-6 pb-28 max-lg:pt-4 max-lg:pb-16 pointer-events-none">
-          <div className="max-w-7xl mx-auto pointer-events-auto bg-background border border-border/20 rounded-2xl divide-y divide-border/20 shadow-2xl shadow-black/50">
+          <div className="max-w-7xl mx-auto pointer-events-auto bg-background   divide-y divide-border/20 shadow-2xl shadow-black/50">
             {/* About */}
             <section className="px-12 max-lg:px-6 py-16">
               <div
