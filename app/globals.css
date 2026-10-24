@@ -167,3 +167,28 @@ h1, h2, h3,
     background-clip: text;
     color: transparent;
 }
+
+::-webkit-scrollbar {
+    width: 16px;
+    height: 16px;
+}
+
+::-webkit-scrollbar-track,
+::-webkit-scrollbar-corner {
+    background: var(--color-muted);
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 0;
+    background: var(--color-primary);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--color-secondary);
+}
+
+@supports not selector(::-webkit-scrollbar) {
+    html {
+        scrollbar-color: var(--color-primary) var(--color-muted);
+    }
+}

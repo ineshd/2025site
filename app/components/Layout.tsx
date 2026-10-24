@@ -14,7 +14,7 @@ const Layout = ({children, headerPosition = 'sticky'}: LayoutProps) => {
             <Header position={headerPosition}/>
             {/* relative z-10 with an opaque background so the sticky footer below
                 stays hidden underneath until the content scrolls past it. */}
-            <main className={"relative z-10 bg-background flex-1 w-screen overflow-x-clip"}>{children}</main>
+            <main className={"relative z-10 bg-background flex-1 w-full overflow-x-clip"}>{children}</main>
             <Footer/>
         </div>
     );

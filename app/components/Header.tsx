@@ -64,7 +64,7 @@ const Header = ({position = 'sticky'}: HeaderProps) => {
 
     return (
         <header
-            className={`[view-transition-name:navbar] shadow-2xl z-50 w-screen max-w-screen bg-muted flex flex-col ${position === 'absolute' ? 'absolute' : 'sticky top-0'}`}>
+            className={`[view-transition-name:navbar] shadow-2xl z-50 w-full bg-muted flex flex-col ${position === 'absolute' ? 'absolute' : 'sticky top-0'}`}>
             <div className="px-8 h-32 max-lg:h-24 flex-row flex items-center">
                 <TransitionLink href="/" className="group">
                     <div className={"flex flex-col my-auto flex-1"}>
