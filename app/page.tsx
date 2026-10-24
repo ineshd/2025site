@@ -63,8 +63,17 @@ export default function Home() {
       />
 
       {/* Hero */}
-      <section className="[view-transition-name:hero] relative h-screen flex flex-col justify-center items-center text-center px-8 lg:items-start lg:justify-end lg:text-left lg:px-20 lg:pb-24">
-        <HeroBackground />
+      {/* One background grid pinned behind the hero and the cards below
+          it. Everything above it is pointer-events-none except actual
+          content, so clicking the background works anywhere. */}
+      <div className="relative">
+        <div className="absolute inset-0">
+          <div className="sticky top-0 h-screen overflow-hidden">
+            <HeroBackground />
+          </div>
+        </div>
+
+      <section className="[view-transition-name:hero] relative h-screen flex flex-col justify-center items-center text-center px-8 lg:items-start lg:justify-end lg:text-left lg:px-20 lg:pb-24 pointer-events-none">
         <div className="relative z-10 flex flex-col items-center gap-5 lg:items-start pointer-events-none">
           <h1 className="text-6xl max-lg:text-4xl max-sm:text-3xl font-black italic pointer-events-auto">
             Inesh Dey
@@ -97,7 +106,7 @@ export default function Home() {
               <Linkedin size={28} />
             </Link>
             <Link
-              href="mailto:ineshdey@hotmail.com"
+              href="mailto:me@ineshd.com"
               aria-label="Email"
               className="hover:text-primary transition-colors duration-200"
             >
@@ -106,56 +115,60 @@ export default function Home() {
           </div>
         </div>
         <p className="absolute bottom-12 inset-x-0 text-center text-xl text-foreground/50 tracking-wide pointer-events-none">
-          <span>scroll</span>
+          <span>scroll?</span>
         </p>
       </section>
 
-      {/* About */}
-      <section className="px-16 max-lg:px-8 pt-16 pb-28">
-        <div
-          className="max-w-5xl mx-auto grid gap-x-16 gap-y-6 items-center
+        {/* About + Blog: joined cards scrolling over the pinned background */}
+        <div className="relative px-8 max-lg:px-4 pt-6 pb-28 max-lg:pt-4 max-lg:pb-16 pointer-events-none">
+          <div className="max-w-7xl mx-auto pointer-events-auto bg-background border border-border/20 rounded-2xl divide-y divide-border/20 shadow-2xl shadow-black/50">
+            {/* About */}
+            <section className="px-12 max-lg:px-6 py-16">
+              <div
+                className="grid gap-x-16 gap-y-6 items-center
                                 grid-cols-1 [grid-template-areas:'heading'_'description'_'splat'_'actions']
-                                lg:grid-cols-[1fr_40rem] lg:[grid-template-areas:'heading_splat'_'description_splat'_'actions_splat']"
-        >
-          <h2 className="[grid-area:heading] text-4xl max-sm:text-3xl font-black italic max-lg:text-center">
-            About Me
-          </h2>
-          <p className="[grid-area:description] text-lg text-foreground/50 leading-relaxed max-w-md max-lg:mx-auto max-lg:text-center">
-            I'm a CS &amp; Engineering student from Redmond, WA, who dabbles in
-            3D graphics, web development, and machine learning, using them
-            creatively on everything from a TSA Nationals winning website or a
-            history class. I find the same fascination in designing a UI,
-            debugging, or tweaking a neural network at 3 AM till it works.{" "}
-            <br />
-            <br></br>I try to work on a variety of projects with the newest
-            tech, and love talking about it too. I'm always down to chat; feel
-            free to reach out!
-          </p>
-          <SplatContainer />
-          <div className="[grid-area:actions] flex flex-col sm:flex-row gap-6 w-full">
-            <NavCardLink
-              href="/projects"
-              label="Projects"
-              viewTransitionName="projects-heading"
-            />
-            <NavCardLink
-              href="/experience"
-              label="Experience"
-              viewTransitionName="experience-heading"
-            />
+                                lg:grid-cols-[minmax(0,1fr)_minmax(0,40rem)] lg:[grid-template-areas:'heading_splat'_'description_splat'_'actions_splat']"
+              >
+                <h2 className="[grid-area:heading] text-4xl max-sm:text-3xl font-black max-lg:text-center">
+                  About Me
+                </h2>
+                <p className="[grid-area:description] text-lg text-foreground/50 leading-relaxed max-w-md max-lg:mx-auto max-lg:text-center">
+                  I'm a CS &amp; Engineering student from Redmond, WA, who dabbles in
+                  3D graphics, web development, and machine learning, using them
+                  creatively on everything from a TSA Nationals winning website or a
+                  history class. I find the same fascination in designing a UI,
+                  debugging, or tweaking a neural network at 3 AM till it works.{" "}
+                  <br />
+                  <br></br>I try to work on a variety of projects with the newest
+                  tech, and love talking about it too. I'm always down to chat; feel
+                  free to reach out!
+                </p>
+                <SplatContainer />
+                <div className="[grid-area:actions] flex flex-col sm:flex-row gap-6 w-full">
+                  <NavCardLink
+                    href="/projects"
+                    label="Projects"
+                    viewTransitionName="projects-heading"
+                  />
+                  <NavCardLink
+                    href="/experience"
+                    label="Experience"
+                    viewTransitionName="experience-heading"
+                  />
+                </div>
+              </div>
+            </section>
+
+            {/* Blog */}
+            <section className="px-10 max-lg:px-6 py-16 text-center">
+              <h2 className="text-3xl max-sm:text-2xl font-black mb-3">
+                Blog
+              </h2>
+              <BlogPlaceholder />
+            </section>
           </div>
         </div>
-      </section>
-
-      {/* Blog */}
-      <section className="px-16 max-lg:px-8 pb-28">
-        <div className="max-w-5xl mx-auto border border-border/20 rounded-lg px-10 py-16 text-center">
-          <h2 className="text-3xl max-sm:text-2xl font-black italic mb-3">
-            Blog
-          </h2>
-          <BlogPlaceholder />
-        </div>
-      </section>
+      </div>
     </Layout>
   );
 }

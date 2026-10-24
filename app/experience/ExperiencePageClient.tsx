@@ -16,7 +16,7 @@ type Experience = {
 
 const experience: Experience[] = [
     {
-        org: "UMich NERS — RHE Lab",
+        org: "UMich NERS, RHE Lab",
         role: "Undergraduate Research Assistant",
         period: "Oct 2026 – Present",
         href: "https://ners.engin.umich.edu/",
@@ -53,7 +53,7 @@ const experience: Experience[] = [
         org: "Tesla STEM TSA",
         role: "Vice President",
         period: "Jun 2025 – May 2026",
-        desc: "Events and management site for a 200+ member club — over a third of the student body.",
+        desc: "Events and management site for a 200+ member club, over a third of the student body.",
         hasModel: true,
         href: "https://tesla.lwsd.org/activities/asb",
     },
@@ -99,7 +99,7 @@ export default function ExperiencePageClient() {
 
             <section className="relative px-16 max-lg:px-8 z-10">
                 <div className="max-w-5xl mx-auto bg-background shadow-2xl min-h-screen px-10 py-28 max-lg:px-6">
-                    <h1 className="[view-transition-name:experience-heading] text-5xl max-lg:text-4xl max-sm:text-3xl font-black italic mb-14">
+                    <h1 className="[view-transition-name:experience-heading] text-5xl max-lg:text-4xl max-sm:text-3xl font-black mb-14">
                         Experience
                     </h1>
                     <div className="flex flex-col gap-16">
@@ -135,10 +135,12 @@ export default function ExperiencePageClient() {
                     </div>
                 </div>
             </section>
-            <div aria-hidden="true" className="max-lg:hidden fixed inset-0 overflow-hidden opacity-10 pointer-events-none z-0">
-                {/* add a slight darkening overlay to make the text more readable */}
-                <div className="w-full h-full bg-background absolute z-100"/>
-                <FullScreen4545Grid/>
+            {/* Pinned while scrolling but ends with the page content (not fixed),
+                so it never shows behind the footer or in overscroll. */}
+            <div aria-hidden="true" className="max-lg:hidden absolute inset-0 pointer-events-none z-0">
+                <div className="sticky top-0 h-screen overflow-hidden opacity-10">
+                    <FullScreen4545Grid/>
+                </div>
             </div>
         </Layout>
     );

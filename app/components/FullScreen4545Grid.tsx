@@ -1,6 +1,6 @@
 "use client"
 import React, { useEffect, useState, useRef, useCallback, useMemo } from 'react';
-import { motion } from 'framer-motion';
+import { motion, useAnimationFrame, useMotionValue } from 'framer-motion';
 
 interface FullScreen4545GridProps {
     clickToFlip?: boolean;
@@ -44,7 +44,10 @@ type FlipPhase = 'idle' | 'compressing' | 'expanding';
 const ROTATION_DEG = 12;
 const ROW_HEIGHT_PX = 48; // text-5xl with line-height: none
 const FLIP_STEP_MS = 150;
-const SCROLL_DURATION_S = 360;
+const SCROLL_DURATION_S = 720;
+const SCROLL_BOOST = 0.4;
+const SCROLL_BOOST_DECAY = 3;const SCROLL_BLUR_PER_PX = 35;
+const SCROLL_BLUR_MAX_PX = 8;
 
 const FullScreen4545Grid: React.FC<FullScreen4545GridProps> = ({ clickToFlip = false, animate = true }) => {
     const [textIndex, setTextIndex] = useState(0);
@@ -54,8 +57,9 @@ const FullScreen4545Grid: React.FC<FullScreen4545GridProps> = ({ clickToFlip = f
     const [numRows, setNumRows] = useState(0);
     const [numCols, setNumCols] = useState(0);
 
-    // loopWidth is an exact multiple of textWidth so repeatType:"loop" resets
-    // to a visually identical position — that's what makes the scroll seamless.
+    // loopWidth is an exact multiple of textWidth so wrapping the row position
+    // at loopWidth lands on a visually identical spot — that's what makes the
+    // scroll seamless.
     const [loopWidth, setLoopWidth] = useState(0);
 
     // Bumped while scaleY===0 so rows remount with the correct initial x for
@@ -63,6 +67,41 @@ const FullScreen4545Grid: React.FC<FullScreen4545GridProps> = ({ clickToFlip = f
     const [layoutKey, setLayoutKey] = useState(0);
 
     const measureRef = useRef<HTMLSpanElement>(null);
+
+    // Shared scroll position for every row, in [0, loopWidth). Even rows sit at
+    // x = -progress and odd rows at x = progress - loopWidth, which matches the
+    // old per-row 0 → -loopWidth / -loopWidth → 0 loops but lets scrolling push
+    // the speed up or reverse it.
+    const progress = useRef(0);
+    const scrollBoost = useRef(0);
+    const evenX = useMotionValue(0);
+    const oddX = useMotionValue(0);
+    const blurFilter = useMotionValue('none');
+
+    useEffect(() => {
+        if (!animate) return;
+        let lastY = window.scrollY;
+        const onScroll = () => {
+            scrollBoost.current += (window.scrollY - lastY) * SCROLL_BOOST;
+            lastY = window.scrollY;
+        };
+        window.addEventListener('scroll', onScroll, { passive: true });
+        return () => window.removeEventListener('scroll', onScroll);
+    }, [animate]);
+
+    useAnimationFrame((_, deltaMs) => {
+        if (!animate || loopWidth === 0) return;
+        const dt = deltaMs / 1000;
+        const speed = loopWidth / SCROLL_DURATION_S + scrollBoost.current;
+        scrollBoost.current *= Math.exp(-SCROLL_BOOST_DECAY * dt);
+        // Double modulo keeps it in range when the speed is negative.
+        progress.current = ((progress.current + speed * dt) % loopWidth + loopWidth) % loopWidth;
+        evenX.set(-progress.current);
+        oddX.set(progress.current - loopWidth);
+        // 'none' at rest (not blur(0px)) so the filter layer is dropped entirely.
+        const blur = Math.min(SCROLL_BLUR_MAX_PX, Math.abs(scrollBoost.current) / SCROLL_BLUR_PER_PX);
+        blurFilter.set(blur < 0.05 ? 'none' : `blur(${blur.toFixed(2)}px)`);
+    });
 
     useEffect(() => {
         setSystemInfo(getSystemInfo());
@@ -84,8 +123,8 @@ const FullScreen4545Grid: React.FC<FullScreen4545GridProps> = ({ clickToFlip = f
      *   loopWidth      = singlePassCols × textWidth          (exact tile-width multiple)
      *
      * With numCols doubled, content spans [0, 2·loopWidth].
-     * Even rows animate x: 0 → -loopWidth  (content window shifts right over content)
-     * Odd  rows animate x: -loopWidth → 0  (opposite direction, staggered start)
+     * Even rows move x: 0 → -loopWidth  (content window shifts right over content)
+     * Odd  rows move x: -loopWidth → 0  (opposite direction, staggered start)
      * Because loopWidth is an integer number of text widths, the loop reset is invisible.
      */
     const calcGrid = useCallback((text: string) => {
@@ -190,7 +229,7 @@ const FullScreen4545Grid: React.FC<FullScreen4545GridProps> = ({ clickToFlip = f
             )}
 
             {animate && numCols > 0 && loopWidth > 0 && (
-                <div className="w-screen h-screen flex flex-col items-center justify-center overflow-hidden cursor-default select-none [overflow-anchor:none]">
+                <motion.div className="w-screen h-screen flex flex-col items-center justify-center overflow-hidden cursor-default select-none [overflow-anchor:none]" style={{ filter: blurFilter }}>
                     <div className="rotate-12">
                         {Array.from({ length: numRows }, (_, rowIndex) => {
                             const goesLeft = rowIndex % 2 === 0;
@@ -198,14 +237,7 @@ const FullScreen4545Grid: React.FC<FullScreen4545GridProps> = ({ clickToFlip = f
                                 <motion.div
                                     key={`${rowIndex}-${layoutKey}`}
                                     className={`flex ${goesLeft ? 'ml-16 even-row' : 'ml-0 odd-row'}`}
-                                    initial={{ x: goesLeft ? 0 : -loopWidth }}
-                                    animate={{ x: goesLeft ? -loopWidth : 0 }}
-                                    transition={{
-                                        duration: SCROLL_DURATION_S,
-                                        ease: "linear",
-                                        repeat: Infinity,
-                                        repeatType: "loop",
-                                    }}
+                                    style={{ x: goesLeft ? evenX : oddX }}
                                 >
                                     <motion.div
                                         className="flex"
@@ -231,7 +263,7 @@ const FullScreen4545Grid: React.FC<FullScreen4545GridProps> = ({ clickToFlip = f
                             );
                         })}
                     </div>
-                </div>
+                </motion.div>
             )}
         </>
     );

@@ -16,7 +16,7 @@
     --text-10xl: 31.999rem;
 
     --font-heading: Jost;
-    --font-body: Jost;
+    --font-body: var(--font-asap);
 
     --font-weight-normal: 400;
     --font-weight-bold: 700;
@@ -52,7 +52,7 @@
 }
 
 body {
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: var(--font-asap), Arial, Helvetica, sans-serif;
     overflow-x: hidden;
 }
 
@@ -88,6 +88,12 @@ h1, h2, h3,
 @layer base {
     * {
         @apply border-border;
+    }
+
+    /* The root background is what shows when overscrolling past either end:
+       halfway between the header/footer color and the page background. */
+    html {
+        background-color: color-mix(in oklab, var(--color-muted), var(--color-background));
     }
 
     body {
@@ -151,4 +157,15 @@ h1, h2, h3,
     to {
         transform: translateY(0);
     }
+}
+
+.logo-texture {
+    background-image: linear-gradient(var(--color-primary), var(--color-primary)), url(/logo-texture.png);
+    background-size: cover;
+    background-position: center;
+    background-blend-mode: color;
+    filter: brightness(2);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
 }

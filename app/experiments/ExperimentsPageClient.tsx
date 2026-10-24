@@ -8,7 +8,7 @@ import {Link2} from "lucide-react";
 const experiments = [
     {
         name: "Finding New Fixtures",
-        description: "A look at discovering and visualizing lighting fixtures — a small experiment in data and design.",
+        description: "A look at discovering and visualizing lighting fixtures; a small experiment in data and design.",
         href: "/find-new-fixtures",
         external: false,
     },
@@ -32,11 +32,11 @@ export default function ExperimentsPageClient() {
     return (
         <Layout>
             <section className="px-16 max-lg:px-8 py-28">
-                <h1 className="text-5xl max-lg:text-4xl max-sm:text-3xl font-black italic mb-4">
+                <h1 className="text-5xl max-lg:text-4xl max-sm:text-3xl font-black mb-4">
                     Experiments
                 </h1>
                 <h2 className="text-xl text-foreground/50 mb-8">
-                    Unpolished stuff that's cool enough to share.
+                    Some unpolished projects.
                 </h2>
                 <div className="flex flex-col gap-8">
                     {experiments.map((item) => {

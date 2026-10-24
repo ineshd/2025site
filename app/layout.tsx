@@ -1,5 +1,5 @@
 import type {Metadata} from "next";
-import {Geist, Geist_Mono, Montserrat} from "next/font/google";
+import {Asap, Geist_Mono, Montserrat} from "next/font/google";
 import {ViewTransitionProvider} from "@/app/components/ViewTransitionProvider";
 import {Analytics} from "@vercel/analytics/next";
 import "./globals.css";
@@ -7,8 +7,8 @@ import "./globals.css";
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL
     ?? "https://ineshd.com";
 
-const geistSans = Geist({
-    variable: "--font-geist-sans",
+const asap = Asap({
+    variable: "--font-asap",
     subsets: ["latin"],
 });
 
@@ -61,8 +61,15 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en">
+        <head>
+            {/* Subset to just the icons used on the site; add names here (alphabetical) as needed. */}
+            <link
+                rel="stylesheet"
+                href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=arrow_forward&display=block"
+            />
+        </head>
         <body
-            className={`${geistSans.variable} ${geistMono.variable} ${montserrat.variable} antialiased`}
+            className={`${asap.variable} ${geistMono.variable} ${montserrat.variable} antialiased`}
         >
         <ViewTransitionProvider>
             {children}

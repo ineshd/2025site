@@ -56,7 +56,7 @@ export default function ProjectsPageClient() {
 
             <section className="relative px-16 max-lg:px-8 z-10">
                 <div className="max-w-5xl mx-auto bg-background shadow-2xl min-h-screen px-10 py-28 max-lg:px-6">
-                    <h1 className="[view-transition-name:projects-heading] text-5xl max-lg:text-4xl max-sm:text-3xl font-black italic mb-14">
+                    <h1 className="[view-transition-name:projects-heading] text-5xl max-lg:text-4xl max-sm:text-3xl font-black mb-14">
                         Projects
                     </h1>
                     <div className="flex flex-col gap-16">
@@ -84,8 +84,12 @@ export default function ProjectsPageClient() {
                     </div>
                 </div>
             </section>
-            <div aria-hidden="true" className="max-lg:hidden fixed inset-0 overflow-hidden opacity-10 pointer-events-none z-0">
-                <FullScreen4545Grid/>
+            {/* Pinned while scrolling but ends with the page content (not fixed),
+                so it never shows behind the footer or in overscroll. */}
+            <div aria-hidden="true" className="max-lg:hidden absolute inset-0 pointer-events-none z-0">
+                <div className="sticky top-0 h-screen overflow-hidden opacity-10">
+                    <FullScreen4545Grid/>
+                </div>
             </div>
         </Layout>
     );
