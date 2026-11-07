@@ -3,7 +3,7 @@
 import Layout from "@/app/components/Layout";
 import TransitionLink from "@/app/components/TransitionLink";
 import Link from "next/link";
-import {Link2} from "lucide-react";
+import { Link2 } from "lucide-react";
 
 const experiments = [
     {
@@ -44,7 +44,7 @@ export default function ExperimentsPageClient() {
                         const content = (
                             <>
                                 <p className="hidden sm:flex absolute top-6 right-8 items-center gap-1.5 text-sm text-foreground/30 tracking-wide truncate max-w-[40%] group-hover:text-background/70 transition-colors duration-200">
-                                    <Link2 size={14} className="shrink-0"/>
+                                    <Link2 size={14} className="shrink-0" />
                                     {url}
                                 </p>
                                 <h3 className="text-2xl font-bold mb-1 pr-4 group-hover:text-background transition-colors duration-200">
@@ -54,7 +54,7 @@ export default function ExperimentsPageClient() {
                                     {item.description}
                                 </p>
                                 <p className="flex sm:hidden items-center gap-1.5 text-sm text-foreground/30 tracking-wide mt-3 truncate group-hover:text-background/70 transition-colors duration-200">
-                                    <Link2 size={14} className="shrink-0"/>
+                                    <Link2 size={14} className="shrink-0" />
                                     {url}
                                 </p>
                             </>

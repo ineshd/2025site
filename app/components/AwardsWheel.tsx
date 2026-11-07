@@ -1,6 +1,6 @@
 "use client";
 
-import {KeyboardEvent, PointerEvent, useCallback, useEffect, useRef, useState} from "react";
+import { KeyboardEvent, PointerEvent, useCallback, useEffect, useRef, useState } from "react";
 
 export type AwardGroup = {
     // Short name for the wheel; long names would wrap into each other there.
@@ -43,7 +43,7 @@ const nameOpacity = (dist: number) => {
     return 0;
 };
 
-export default function AwardsWheel({groups}: { groups: AwardGroup[] }) {
+export default function AwardsWheel({ groups }: { groups: AwardGroup[] }) {
     const n = groups.length;
     const [pos, setPos] = useState(0);        // rendered position, in names (unbounded)
     const posRef = useRef(0);
@@ -59,10 +59,10 @@ export default function AwardsWheel({groups}: { groups: AwardGroup[] }) {
         };
     }, []);
 
-    const setPosition = (p: number) => {
+    const setPosition = useCallback((p: number) => {
         posRef.current = p;
         setPos(p);
-    };
+    }, []);
 
     const glide = useCallback(() => {
         if (frame.current !== null) return;
@@ -79,7 +79,7 @@ export default function AwardsWheel({groups}: { groups: AwardGroup[] }) {
             frame.current = requestAnimationFrame(tick);
         };
         frame.current = requestAnimationFrame(tick);
-    }, []);
+    }, [setPosition]);
 
     const moveTo = useCallback((t: number) => {
         target.current = t;
@@ -91,17 +91,17 @@ export default function AwardsWheel({groups}: { groups: AwardGroup[] }) {
         } else {
             glide();
         }
-    }, [glide, n]);
+    }, [glide, n, setPosition]);
 
     const step = useCallback((delta: number) => moveTo(Math.round(target.current) + delta), [moveTo]);
 
     // Click and hold an arrow button to keep spinning.
     const holdTimer = useRef<number | null>(null);
-    const stopHold = () => {
+    const stopHold = useCallback(() => {
         if (holdTimer.current !== null) clearTimeout(holdTimer.current);
         holdTimer.current = null;
-    };
-    useEffect(() => stopHold, []);
+    }, []);
+    useEffect(() => stopHold, [stopHold]);
     const startHold = (delta: number) => (e: PointerEvent) => {
         if (e.button !== 0) return;
         e.preventDefault();
@@ -122,7 +122,7 @@ export default function AwardsWheel({groups}: { groups: AwardGroup[] }) {
     const onListPointerDown = (e: PointerEvent<HTMLUListElement>) => {
         suppressClick.current = false;
         if (e.pointerType === "touch" || e.button !== 0) return;
-        drag.current = {y: e.clientY, pos: posRef.current, moved: false};
+        drag.current = { y: e.clientY, pos: posRef.current, moved: false };
     };
     const onListPointerMove = (e: PointerEvent<HTMLUListElement>) => {
         const d = drag.current;
@@ -161,20 +161,20 @@ export default function AwardsWheel({groups}: { groups: AwardGroup[] }) {
     const arrowClass = "size-10 grid place-items-center bg-primary text-background hover:bg-secondary active:brightness-90 transition-colors duration-200 select-none touch-manipulation";
 
     return (
-        <div role="region" aria-roledescription="carousel" aria-label="Awards" tabIndex={0} onKeyDown={onKeyDown}
-             className="grid lg:grid-cols-2 gap-x-12 gap-y-6 items-center outline-none focus-visible:ring-2 focus-visible:ring-primary">
+        <section aria-roledescription="carousel" aria-label="Awards"
+            className="grid lg:grid-cols-2 gap-x-12 gap-y-6 items-center">
             <div className="flex items-center gap-4">
                 <div className="flex flex-col gap-3">
                     <button type="button" aria-label="Previous award group" className={arrowClass}
-                            onPointerDown={startHold(-1)} onPointerUp={stopHold} onPointerLeave={stopHold}
-                            onPointerCancel={stopHold} onContextMenu={(e) => e.preventDefault()}
-                            onClick={(e) => e.detail === 0 && step(-1) /* keyboard activation */}>
+                        onPointerDown={startHold(-1)} onPointerUp={stopHold} onPointerLeave={stopHold}
+                        onPointerCancel={stopHold} onContextMenu={(e) => e.preventDefault()} onKeyDown={onKeyDown}
+                        onClick={(e) => e.detail === 0 && step(-1) /* keyboard activation */}>
                         <span aria-hidden="true" className="material-symbols-rounded">arrow_upward</span>
                     </button>
                     <button type="button" aria-label="Next award group" className={arrowClass}
-                            onPointerDown={startHold(1)} onPointerUp={stopHold} onPointerLeave={stopHold}
-                            onPointerCancel={stopHold} onContextMenu={(e) => e.preventDefault()}
-                            onClick={(e) => e.detail === 0 && step(1) /* keyboard activation */}>
+                        onPointerDown={startHold(1)} onPointerUp={stopHold} onPointerLeave={stopHold}
+                        onPointerCancel={stopHold} onContextMenu={(e) => e.preventDefault()} onKeyDown={onKeyDown}
+                        onClick={(e) => e.detail === 0 && step(1) /* keyboard activation */}>
                         <span aria-hidden="true" className="material-symbols-rounded">arrow_downward</span>
                     </button>
                 </div>
@@ -188,16 +188,16 @@ export default function AwardsWheel({groups}: { groups: AwardGroup[] }) {
                         return (
                             <li key={g.name} className="absolute inset-x-0 top-1/2 -translate-y-1/2">
                                 <button type="button" tabIndex={-1} aria-current={isSelected || undefined}
-                                        onClick={() => {
-                                            if (suppressClick.current) return;
-                                            const t = Math.round(target.current);
-                                            moveTo(t + wrap(i - t, n));
-                                        }}
-                                        style={{
-                                            transform: `translateY(calc(${dist.toFixed(4)} * ${SPACING_REM}rem)) scale(${Math.max(0.5, 1 - 0.15 * Math.abs(dist)).toFixed(4)})`,
-                                            opacity,
-                                        }}
-                                        className={`block w-full text-left text-3xl max-sm:text-2xl font-black leading-tight origin-left
+                                    onClick={() => {
+                                        if (suppressClick.current) return;
+                                        const t = Math.round(target.current);
+                                        moveTo(t + wrap(i - t, n));
+                                    }}
+                                    style={{
+                                        transform: `translateY(calc(${dist.toFixed(4)} * ${SPACING_REM}rem)) scale(${Math.max(0.5, 1 - 0.15 * Math.abs(dist)).toFixed(4)})`,
+                                        opacity,
+                                    }}
+                                    className={`block w-full text-left text-3xl max-sm:text-2xl font-black leading-tight origin-left
                                                     transition-colors duration-300
                                                     ${opacity === 0 ? "pointer-events-none" : ""}
                                                     ${isSelected ? "text-primary" : "text-foreground"}`}>
@@ -224,6 +224,6 @@ export default function AwardsWheel({groups}: { groups: AwardGroup[] }) {
                     ))}
                 </ul>
             </div>
-        </div>
+        </section>
     );
 }

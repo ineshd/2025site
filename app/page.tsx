@@ -135,51 +135,51 @@ export default function Home() {
           </div>
         </div>
 
-      <section className="[view-transition-name:hero] relative h-screen flex flex-col justify-center items-center text-center px-8 lg:items-start lg:justify-end lg:text-left lg:px-20 lg:pb-24 pointer-events-none">
-        <div className="relative z-10 flex flex-col items-center gap-5 lg:items-start pointer-events-none">
-          <h1 className="text-6xl max-lg:text-4xl max-sm:text-3xl font-black italic pointer-events-auto">
-            Inesh Dey
-          </h1>
-          <p className="text-2xl max-lg:text-xl text-primary pointer-events-auto">
-            University of Michigan CoE '30 | Computer Science & Engineering
-          </p>
-          <p className="text-xl max-lg:text-base max-w-lg leading-relaxed pointer-events-auto">
-            I like installing software, meeting people, and winning competitions
-            :)
-          </p>
-          <p className="text-md tracking-wide pointer-events-auto">
-            try clicking the background
-          </p>
-          <div className="flex gap-6 mt-4 text-foreground/50 pointer-events-auto">
-            <Link
-              href="https://github.com/ineshd"
-              target="_blank"
-              aria-label="GitHub"
-              className="block p-1.5 hover:bg-primary hover:text-background active:bg-secondary transition-colors duration-200"
-            >
-              <Github size={28} />
-            </Link>
-            <Link
-              href="https://linkedin.com/in/ineshdey"
-              target="_blank"
-              aria-label="LinkedIn"
-              className="block p-1.5 hover:bg-primary hover:text-background active:bg-secondary transition-colors duration-200"
-            >
-              <Linkedin size={28} />
-            </Link>
-            <Link
-              href="mailto:me@ineshd.com"
-              aria-label="Email"
-              className="block p-1.5 hover:bg-primary hover:text-background active:bg-secondary transition-colors duration-200"
-            >
-              <Mail size={28} />
-            </Link>
+        <section className="[view-transition-name:hero] relative h-screen flex flex-col justify-center items-center text-center px-8 lg:items-start lg:justify-end lg:text-left lg:px-20 lg:pb-24 pointer-events-none">
+          <div className="relative z-10 flex flex-col items-center gap-5 lg:items-start pointer-events-none">
+            <h1 className="text-6xl max-lg:text-4xl max-sm:text-3xl font-black italic pointer-events-auto">
+              Inesh Dey
+            </h1>
+            <p className="text-2xl max-lg:text-xl text-primary pointer-events-auto">
+              University of Michigan CoE '30 | Computer Science & Engineering
+            </p>
+            <p className="text-xl max-lg:text-base max-w-lg leading-relaxed pointer-events-auto">
+              I like installing software, meeting people, and winning competitions
+              :)
+            </p>
+            <p className="text-md tracking-wide pointer-events-auto">
+              try clicking the background
+            </p>
+            <div className="flex gap-6 mt-4 text-foreground/50 pointer-events-auto">
+              <Link
+                href="https://github.com/ineshd"
+                target="_blank"
+                aria-label="GitHub"
+                className="block p-1.5 hover:bg-primary hover:text-background active:bg-secondary transition-colors duration-200"
+              >
+                <Github size={28} />
+              </Link>
+              <Link
+                href="https://linkedin.com/in/ineshdey"
+                target="_blank"
+                aria-label="LinkedIn"
+                className="block p-1.5 hover:bg-primary hover:text-background active:bg-secondary transition-colors duration-200"
+              >
+                <Linkedin size={28} />
+              </Link>
+              <Link
+                href="mailto:me@ineshd.com"
+                aria-label="Email"
+                className="block p-1.5 hover:bg-primary hover:text-background active:bg-secondary transition-colors duration-200"
+              >
+                <Mail size={28} />
+              </Link>
+            </div>
           </div>
-        </div>
-        <p className="absolute bottom-12 inset-x-0 text-center text-xl text-foreground/50 tracking-wide pointer-events-none">
-          <span>scroll?</span>
-        </p>
-      </section>
+          <p className="absolute bottom-12 inset-x-0 text-center text-xl text-foreground/50 tracking-wide pointer-events-none">
+            <span>scroll?</span>
+          </p>
+        </section>
 
         {/* About + Blog: joined cards scrolling over the pinned background */}
         <div className="relative px-8 max-lg:px-4 pt-6 pb-28 max-lg:pt-4 max-lg:pb-16 pointer-events-none">
@@ -196,10 +196,9 @@ export default function Home() {
                 </h2>
                 <p className="[grid-area:description] text-lg text-foreground/50 leading-relaxed max-w-md max-lg:mx-auto max-lg:text-center">
                   I'm a CS &amp; Engineering student from Redmond, WA, who dabbles in
-                  3D graphics, web development, and machine learning, using them
-                  creatively on everything from a TSA Nationals winning website or a
-                  history class. I find the same fascination in designing a UI,
-                  debugging, or tweaking a neural network at 3 AM till it works.{" "}
+                  3D graphics, web development, robotics, and machine learning. I'm really
+                  into the use of computer science in both creative endeavors and in simulating the real world.
+                  {" "}
                   <br />
                   <br></br>I try to work on a variety of projects with the newest
                   tech, and love talking about it too. I'm always down to chat; feel

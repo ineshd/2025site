@@ -116,12 +116,12 @@ const itemClassName = "group relative isolate flex items-center gap-12 max-lg:fl
 function ExperienceItem({ href, expands, children }: { href?: string; expands: boolean; children: ReactNode }) {
     return href ? (
         <a href={href} target="_blank" rel="noopener noreferrer" className={itemClassName}>
-            <EntryHoverFill expands={expands}/>
+            <EntryHoverFill expands={expands} />
             {children}
         </a>
     ) : (
         <div className={itemClassName}>
-            <EntryHoverFill expands={expands}/>
+            <EntryHoverFill expands={expands} />
             {children}
         </div>
     );
@@ -139,11 +139,11 @@ export default function ExperiencePageClient() {
                     <div className="flex flex-col gap-4">
                         {experience.map((item) => (
                             <ExperienceItem key={item.org} href={item.href} expands={!!item.image}>
-                                {item.image && <EntryPreviewImage image={item.image} alt={`${item.org} preview`} focus={item.imageFocus}/>}
-                                {item.logo && <EntryPreviewLogo image={item.logo} alt={`${item.org} logo`}/>}
+                                {item.image && <EntryPreviewImage image={item.image} alt={`${item.org} preview`} focus={item.imageFocus} />}
+                                {item.logo && <EntryPreviewLogo image={item.logo} alt={`${item.org} logo`} />}
                                 {/* The corner link would sit on the preview, so entries with an image show it under the text instead. */}
                                 {item.href && !item.image && !item.logo && <p className="hidden sm:flex absolute top-6 right-8 items-center gap-1.5 text-sm text-foreground/30 tracking-wide truncate max-w-[40%] group-hover:text-background/70 transition-colors duration-200">
-                                    <Link2 size={14} className="shrink-0"/>
+                                    <Link2 size={14} className="shrink-0" />
                                     {item.href}
                                 </p>}
                                 <div className="flex-1">
@@ -158,7 +158,7 @@ export default function ExperiencePageClient() {
                                         {item.desc}
                                     </p>}
                                     {item.href && <p className={`${item.image || item.logo ? "" : "sm:hidden "}mt-4 flex items-center gap-1.5 text-xs text-foreground/30 tracking-wide truncate break-all group-hover:text-background/70 transition-colors duration-200`}>
-                                        <Link2 size={12} className="shrink-0"/>
+                                        <Link2 size={12} className="shrink-0" />
                                         {item.href}
                                     </p>}
                                 </div>
@@ -171,7 +171,7 @@ export default function ExperiencePageClient() {
                 so it never shows behind the footer or in overscroll. */}
             <div aria-hidden="true" className="max-lg:hidden absolute inset-0 pointer-events-none z-0">
                 <div className="sticky top-0 h-screen overflow-hidden opacity-10">
-                    <FullScreen4545Grid/>
+                    <FullScreen4545Grid />
                 </div>
             </div>
         </Layout>

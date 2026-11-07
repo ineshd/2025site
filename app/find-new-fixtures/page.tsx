@@ -1,4 +1,4 @@
-import type {Metadata} from "next";
+import type { Metadata } from "next";
 import FindingNewFixturesClient from "./FindingNewFixturesClient";
 
 export const metadata: Metadata = {
@@ -12,4 +12,3 @@ export const metadata: Metadata = {
 export default function Home() {
     return <FindingNewFixturesClient />;
 }
-                         

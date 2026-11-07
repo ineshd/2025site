@@ -56,8 +56,17 @@ body {
     overflow-x: hidden;
 }
 
-h1, h2, h3,
-.text-3xl, .text-4xl, .text-5xl, .text-6xl, .text-7xl, .text-8xl, .text-9xl, .text-10xl {
+h1,
+h2,
+h3,
+.text-3xl,
+.text-4xl,
+.text-5xl,
+.text-6xl,
+.text-7xl,
+.text-8xl,
+.text-9xl,
+.text-10xl {
     font-family: var(--font-montserrat), Arial, Helvetica, sans-serif;
 }
 
@@ -152,6 +161,7 @@ h1, h2, h3,
     from {
         transform: translateY(-100%);
     }
+
     to {
         transform: translateY(0);
     }

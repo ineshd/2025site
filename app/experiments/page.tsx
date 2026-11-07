@@ -1,4 +1,4 @@
-import type {Metadata} from "next";
+import type { Metadata } from "next";
 import ExperimentsPageClient from "./ExperimentsPageClient";
 
 export const metadata: Metadata = {

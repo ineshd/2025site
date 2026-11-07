@@ -1,5 +1,5 @@
 "use client"
-import React, { useEffect, useState, useRef, useCallback, useMemo } from 'react';
+import React, { useEffect, useState, useRef, useCallback, useMemo, useSyncExternalStore } from 'react';
 import { motion, useAnimationFrame, useMotionValue } from 'framer-motion';
 
 interface FullScreen4545GridProps {
@@ -30,6 +30,8 @@ const getSystemInfo = (): string => {
     return `${os} · ${browser} · `;
 };
 
+const noopSubscribe = () => () => { };
+
 const FLIP_TEXTS = [
     'cool background ',
     '!!!!',
@@ -46,13 +48,14 @@ const ROW_HEIGHT_PX = 48; // text-5xl with line-height: none
 const FLIP_STEP_MS = 150;
 const SCROLL_DURATION_S = 720;
 const SCROLL_BOOST = 0.4;
-const SCROLL_BOOST_DECAY = 3;const SCROLL_BLUR_PER_PX = 35;
+const SCROLL_BOOST_DECAY = 3; const SCROLL_BLUR_PER_PX = 35;
 const SCROLL_BLUR_MAX_PX = 8;
 
 const FullScreen4545Grid: React.FC<FullScreen4545GridProps> = ({ clickToFlip = false, animate = true }) => {
     const [textIndex, setTextIndex] = useState(0);
     const [flipPhase, setFlipPhase] = useState<FlipPhase>('idle');
-    const [systemInfo, setSystemInfo] = useState('');
+    // Read on the client only (empty during server render); it never changes, so there's nothing to subscribe to.
+    const systemInfo = useSyncExternalStore(noopSubscribe, getSystemInfo, () => '');
     // Grid dimensions
     const [numRows, setNumRows] = useState(0);
     const [numCols, setNumCols] = useState(0);
@@ -103,10 +106,6 @@ const FullScreen4545Grid: React.FC<FullScreen4545GridProps> = ({ clickToFlip = f
         blurFilter.set(blur < 0.05 ? 'none' : `blur(${blur.toFixed(2)}px)`);
     });
 
-    useEffect(() => {
-        setSystemInfo(getSystemInfo());
-    }, []);
-
     const flipTexts = useMemo(
         () => systemInfo ? [...FLIP_TEXTS, systemInfo] : FLIP_TEXTS,
         [systemInfo]
@@ -138,7 +137,7 @@ const FullScreen4545Grid: React.FC<FullScreen4545GridProps> = ({ clickToFlip = f
         const H = window.innerHeight;
         const rad = (ROTATION_DEG * Math.PI) / 180;
 
-        const neededWidth  = W * Math.cos(rad) + H * Math.sin(rad);
+        const neededWidth = W * Math.cos(rad) + H * Math.sin(rad);
         const neededHeight = H * Math.cos(rad) + W * Math.sin(rad);
 
         const singlePassCols = Math.ceil(neededWidth / tw) + 2;
@@ -147,7 +146,7 @@ const FullScreen4545Grid: React.FC<FullScreen4545GridProps> = ({ clickToFlip = f
         // Solving: numCols ≥ 3 × singlePassCols.
         const cols = singlePassCols * 3;
         const rows = Math.ceil(neededHeight / ROW_HEIGHT_PX) + 2;
-        const lw   = singlePassCols * tw; // exact pixel multiple of tw
+        const lw = singlePassCols * tw; // exact pixel multiple of tw
 
         setNumCols(cols);
         setNumRows(rows);
@@ -212,9 +211,9 @@ const FullScreen4545Grid: React.FC<FullScreen4545GridProps> = ({ clickToFlip = f
             {!animate && numCols > 0 && (
                 <div className="w-screen h-screen flex flex-col items-center justify-center overflow-hidden cursor-default select-none [overflow-anchor:none]">
                     <div className="rotate-12">
-                        {Array.from({ length: numRows }, (_, rowIndex) => (
+                        {Array.from({ length: numRows }, (_row, rowIndex) => (
                             <div key={rowIndex} className={`flex justify-center ${rowIndex % 2 === 0 ? 'ml-16' : 'ml-0'}`}>
-                                {Array.from({ length: Math.ceil(numCols / 3) }, (_, colIndex) => (
+                                {Array.from({ length: Math.ceil(numCols / 3) }, (_col, colIndex) => (
                                     <span
                                         key={colIndex}
                                         className="text-5xl/none font-bold text-text italic spacing-1 text-nowrap"
@@ -249,9 +248,11 @@ const FullScreen4545Grid: React.FC<FullScreen4545GridProps> = ({ clickToFlip = f
                                             ease: flipPhase === 'compressing' ? 'easeIn' : 'easeOut',
                                         }}
                                     >
-                                        {Array.from({ length: numCols }, (_, colIndex) => (
+                                        {Array.from({ length: numCols }, (_col, colIndex) => (
+                                            // Decorative easter egg inside an aria-hidden background.
                                             <span
                                                 key={colIndex}
+                                                role="presentation"
                                                 onClick={handleClick}
                                                 className={`text-5xl/none font-bold text-text italic spacing-1 hover:text-primary transition-colors text-nowrap ${clickToFlip ? 'cursor-pointer' : ''}`}
                                             >

@@ -1,13 +1,13 @@
 "use client"
 
-import {createContext, ReactNode, useContext, useEffect, useRef} from "react";
-import {usePathname, useRouter} from "next/navigation";
+import { createContext, ReactNode, useContext, useEffect, useRef } from "react";
+import { usePathname, useRouter } from "next/navigation";
 
 type NavigateFn = (href: string) => void;
 
 const ViewTransitionContext = createContext<NavigateFn | null>(null);
 
-export function ViewTransitionProvider({children}: { children: ReactNode }) {
+export function ViewTransitionProvider({ children }: { children: ReactNode }) {
     const router = useRouter();
     const pathname = usePathname();
     const pending = useRef<{ href: string; resolve: () => void } | null>(null);
@@ -52,7 +52,7 @@ export function ViewTransitionProvider({children}: { children: ReactNode }) {
             document.dispatchEvent(new CustomEvent("hero-capture:end"));
             router.push(href);
             return new Promise<void>((resolve) => {
-                pending.current = {href, resolve};
+                pending.current = { href, resolve };
                 // Fallback in case the route never commits (e.g. a failed
                 // navigation), so the transition doesn't hang indefinitely.
                 setTimeout(resolve, 5000);

@@ -1,10 +1,10 @@
 "use client"
 
-import {useEffect, useRef} from "react";
+import { useEffect, useRef } from "react";
 import * as THREE from "three";
 import * as GaussianSplats3D from "@mkkellogg/gaussian-splats-3d";
 
-export default function GaussianSplatViewer({src, className}: { src: string; className?: string }) {
+export default function GaussianSplatViewer({ src, className }: { src: string; className?: string }) {
     const containerRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
@@ -19,7 +19,7 @@ export default function GaussianSplatViewer({src, className}: { src: string; cla
         // Render at a fraction of the container's CSS size (canvas is upscaled via CSS) to keep
         // the splat sort/raster cost down — gaussian splatting is fill-rate heavy.
         const RENDER_SCALE = 0.5;
-        const renderer = new THREE.WebGLRenderer({antialias: true, alpha: true});
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
         renderer.setClearColor(0x000000, 0);
         renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
         renderer.setSize(container.clientWidth * RENDER_SCALE, container.clientHeight * RENDER_SCALE, false);
@@ -39,11 +39,11 @@ export default function GaussianSplatViewer({src, className}: { src: string; cla
             // and nudge it down since it renders a bit high by default.
             'rotation': [0, 0, 1, 0],
             'position': [0, 0.5, 0],
-        }).catch(() => {});
+        }).catch(() => { });
 
         // Smoothly-tracked rotation target driven by mouse position (desktop) or device tilt (mobile)
-        const target = {x: 0, y: 0};
-        const current = {x: 0, y: 0};
+        const target = { x: 0, y: 0 };
+        const current = { x: 0, y: 0 };
 
         const handlePointerMove = (e: PointerEvent) => {
             const rect = container.getBoundingClientRect();
@@ -72,9 +72,9 @@ export default function GaussianSplatViewer({src, className}: { src: string; cla
             const onTap = () => {
                 requestPermission().then((state) => {
                     if (state === "granted") enableOrientation();
-                }).catch(() => {});
+                }).catch(() => { });
             };
-            container.addEventListener("pointerdown", onTap, {once: true});
+            container.addEventListener("pointerdown", onTap, { once: true });
             removeTapListener = () => container.removeEventListener("pointerdown", onTap);
         } else if (typeof window.DeviceOrientationEvent !== "undefined") {
             enableOrientation();
@@ -94,7 +94,7 @@ export default function GaussianSplatViewer({src, className}: { src: string; cla
         animate();
 
         const handleResize = () => {
-            const {clientWidth, clientHeight} = container;
+            const { clientWidth, clientHeight } = container;
             if (clientWidth === 0 || clientHeight === 0) return;
             camera.aspect = clientWidth / clientHeight;
             camera.updateProjectionMatrix();
@@ -118,5 +118,5 @@ export default function GaussianSplatViewer({src, className}: { src: string; cla
         };
     }, [src]);
 
-    return <div ref={containerRef} className={className}/>;
+    return <div ref={containerRef} className={className} />;
 }

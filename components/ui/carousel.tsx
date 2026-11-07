@@ -43,8 +43,8 @@ function useCarousel() {
 }
 
 const Carousel = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement> & CarouselProps
+  HTMLElement,
+  React.HTMLAttributes<HTMLElement> & CarouselProps
 >(
   (
     {
@@ -65,17 +65,21 @@ const Carousel = React.forwardRef<
       },
       plugins
     )
-    const [canScrollPrev, setCanScrollPrev] = React.useState(false)
-    const [canScrollNext, setCanScrollNext] = React.useState(false)
-
-    const onSelect = React.useCallback((api: CarouselApi) => {
-      if (!api) {
-        return
-      }
-
-      setCanScrollPrev(api.canScrollPrev())
-      setCanScrollNext(api.canScrollNext())
-    }, [])
+    // Read scroll state straight from Embla, re-read on its select/reInit events.
+    const subscribe = React.useCallback(
+      (onChange: () => void) => {
+        if (!api) return () => {}
+        api.on("select", onChange)
+        api.on("reInit", onChange)
+        return () => {
+          api.off("select", onChange)
+          api.off("reInit", onChange)
+        }
+      },
+      [api]
+    )
+    const canScrollPrev = React.useSyncExternalStore(subscribe, () => api?.canScrollPrev() ?? false, () => false)
+    const canScrollNext = React.useSyncExternalStore(subscribe, () => api?.canScrollNext() ?? false, () => false)
 
     const scrollPrev = React.useCallback(() => {
       api?.scrollPrev()
@@ -86,7 +90,7 @@ const Carousel = React.forwardRef<
     }, [api])
 
     const handleKeyDown = React.useCallback(
-      (event: React.KeyboardEvent<HTMLDivElement>) => {
+      (event: React.KeyboardEvent<HTMLElement>) => {
         if (event.key === "ArrowLeft") {
           event.preventDefault()
           scrollPrev()
@@ -106,20 +110,6 @@ const Carousel = React.forwardRef<
       setApi(api)
     }, [api, setApi])
 
-    React.useEffect(() => {
-      if (!api) {
-        return
-      }
-
-      onSelect(api)
-      api.on("reInit", onSelect)
-      api.on("select", onSelect)
-
-      return () => {
-        api?.off("select", onSelect)
-      }
-    }, [api, onSelect])
-
     return (
       <CarouselContext.Provider
         value={{
@@ -134,16 +124,15 @@ const Carousel = React.forwardRef<
           canScrollNext,
         }}
       >
-        <div
+        <section
           ref={ref}
           onKeyDownCapture={handleKeyDown}
           className={cn("relative", className)}
-          role="region"
           aria-roledescription="carousel"
           {...props}
         >
           {children}
-        </div>
+        </section>
       </CarouselContext.Provider>
     )
   }
@@ -181,6 +170,8 @@ const CarouselItem = React.forwardRef<
   return (
     <div
       ref={ref}
+      // ARIA carousel pattern: each slide is a group; no HTML tag fits a generic slide.
+      // oxlint-disable-next-line jsx-a11y/prefer-tag-over-role
       role="group"
       aria-roledescription="slide"
       className={cn(

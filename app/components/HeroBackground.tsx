@@ -1,6 +1,6 @@
 "use client"
 
-import {useEffect, useRef} from "react";
+import { useEffect, useRef } from "react";
 import FullScreen4545Grid from "@/app/components/FullScreen4545Grid";
 
 // Renders the live animated grid for steady-state, plus a hidden static
@@ -36,12 +36,12 @@ export default function HeroBackground() {
     return (
         <>
             <div ref={animatedRef} aria-hidden="true"
-                 className="opacity-10 absolute inset-0 overflow-hidden [overflow-anchor:none]">
-                <FullScreen4545Grid clickToFlip/>
+                className="opacity-10 absolute inset-0 overflow-hidden [overflow-anchor:none]">
+                <FullScreen4545Grid clickToFlip />
             </div>
-            <div ref={staticRef} aria-hidden="true" style={{visibility: "hidden"}}
-                 className="opacity-10 absolute inset-0 overflow-hidden [overflow-anchor:none]">
-                <FullScreen4545Grid animate={false}/>
+            <div ref={staticRef} aria-hidden="true" style={{ visibility: "hidden" }}
+                className="opacity-10 absolute inset-0 overflow-hidden [overflow-anchor:none]">
+                <FullScreen4545Grid animate={false} />
             </div>
         </>
     );

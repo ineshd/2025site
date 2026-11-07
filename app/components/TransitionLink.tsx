@@ -1,15 +1,15 @@
 "use client"
 
 import Link from "next/link";
-import {useRouter} from "next/navigation";
-import {AnchorHTMLAttributes, MouseEvent, useEffect} from "react";
-import {useViewTransitionNavigate} from "@/app/components/ViewTransitionProvider";
+import { useRouter } from "next/navigation";
+import { AnchorHTMLAttributes, MouseEvent, useEffect } from "react";
+import { useViewTransitionNavigate } from "@/app/components/ViewTransitionProvider";
 
 interface TransitionLinkProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
     href: string;
 }
 
-export default function TransitionLink({href, children, onClick, ...rest}: TransitionLinkProps) {
+export default function TransitionLink({ href, children, onClick, ...rest }: TransitionLinkProps) {
     const router = useRouter();
     const navigate = useViewTransitionNavigate();
 

@@ -3,9 +3,9 @@
 import Layout from "@/app/components/Layout";
 import FullScreen4545Grid from "@/app/components/FullScreen4545Grid";
 import Link from "next/link";
-import {StaticImageData} from "next/image";
-import {EntryHoverFill, EntryPreviewImage} from "@/app/components/EntryPreview";
-import {Link2} from "lucide-react";
+import { StaticImageData } from "next/image";
+import { EntryHoverFill, EntryPreviewImage } from "@/app/components/EntryPreview";
+import { Link2 } from "lucide-react";
 import SplineScene from "@/app/components/SplineScene";
 import tsaWebmaster from "@/app/projects/tsa-webmaster.webp";
 import smartGardenPi from "@/app/projects/smart-garden-pi.jpg";
@@ -86,15 +86,16 @@ export default function ProjectsPageClient() {
                     <div className="flex flex-col gap-4">
                         {projects.map((project) => (
                             <Link key={project.name} href={project.href} target="_blank"
-                                  className="group relative isolate flex items-center gap-12 max-lg:flex-col max-lg:items-stretch -mx-6 px-6 py-6">
-                                <EntryHoverFill expands={!!project.image}/>
-                                {project.image && <EntryPreviewImage image={project.image} alt={`${project.name} preview`}/>}
+                                className="group relative isolate flex items-center gap-12 max-lg:flex-col max-lg:items-stretch -mx-6 px-6 py-6">
+                                <EntryHoverFill expands={!!project.image} />
+                                {project.image && <EntryPreviewImage image={project.image} alt={`${project.name} preview`} />}
                                 {project.splineScene && (
-                                    // preventDefault so interacting with the model doesn't open the project link.
-                                    <div onClick={(e) => e.preventDefault()} className="relative w-full aspect-video lg:aspect-auto lg:size-48 shrink-0 lg:order-last">
+                                    // preventDefault so interacting with the model doesn't open the project link;
+                                    // the wrapper itself is just layout (the canvas carries the label).
+                                    <div role="presentation" onClick={(e) => e.preventDefault()} className="relative w-full aspect-video lg:aspect-auto lg:size-48 shrink-0 lg:order-last">
                                         {/* absolute so the runtime's own canvas sizing can't stretch the slot */}
                                         <SplineScene scene={project.splineScene} label={`${project.name} 3D model`}
-                                                     className="absolute inset-0 block w-full h-full"/>
+                                            className="absolute inset-0 block w-full h-full" />
                                     </div>
                                 )}
                                 <div className="flex-1">
@@ -106,7 +107,7 @@ export default function ProjectsPageClient() {
                                         {project.description}
                                     </p>
                                     <p className="flex items-center gap-1.5 text-sm text-foreground/30 tracking-wide mt-3 truncate group-hover:text-background/70 transition-colors duration-200">
-                                        <Link2 size={14} className="shrink-0"/>
+                                        <Link2 size={14} className="shrink-0" />
                                         {project.href.replace(/^https?:\/\//, "")}
                                     </p>
                                 </div>
@@ -119,7 +120,7 @@ export default function ProjectsPageClient() {
                 so it never shows behind the footer or in overscroll. */}
             <div aria-hidden="true" className="max-lg:hidden absolute inset-0 pointer-events-none z-0">
                 <div className="sticky top-0 h-screen overflow-hidden opacity-10">
-                    <FullScreen4545Grid/>
+                    <FullScreen4545Grid />
                 </div>
             </div>
         </Layout>
