@@ -3,6 +3,11 @@
 import Layout from "@/app/components/Layout";
 import FullScreen4545Grid from "@/app/components/FullScreen4545Grid";
 import Link from "next/link";
+import Image from "next/image";
+import fixture1 from "@/public/1.jpg";
+import fixture2 from "@/public/23.jpg";
+import fixture3 from "@/public/34.jpg";
+import fixture4 from "@/public/45.jpg";
 import {
     Carousel,
     CarouselContent,
@@ -10,6 +15,8 @@ import {
     CarouselNext,
     CarouselPrevious,
 } from "@/components/ui/carousel"
+
+const FIXTURE_PHOTOS = [fixture1, fixture2, fixture3, fixture4];
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import CountUp from "react-countup";
@@ -44,22 +51,14 @@ export default function FindingNewFixturesClient() {
                 >
                     <Carousel className="max-w-[400px] mx-auto" opts={{ loop: true, }}>
                         <CarouselContent className="max-h-[400px] ">
-                            <CarouselItem>
-                                {/* eslint-disable-next-line @next/next/no-img-element */}
-                                <img src="/1.jpg" alt="Fixture 1" className="h-full w-full object-cover  rounded-lg p-8" />
-                            </CarouselItem>
-                            <CarouselItem>
-                                {/* eslint-disable-next-line @next/next/no-img-element */}
-                                <img src="/23.jpg" alt="Fixture 2" className="h-full w-full object-cover  rounded-lg p-8" />
-                            </CarouselItem>
-                            <CarouselItem>
-                                {/* eslint-disable-next-line @next/next/no-img-element */}
-                                <img src="/34.jpg" alt="Fixture 3" className="h-full w-full  object-cover  rounded-lg p-8" />
-                            </CarouselItem>
-                            <CarouselItem>
-                                {/* eslint-disable-next-line @next/next/no-img-element */}
-                                <img src="/45.jpg" alt="Fixture 3" className="h-full w-full object-cover  rounded-lg p-8" />
-                            </CarouselItem>
+                            {FIXTURE_PHOTOS.map((photo, i) => (
+                                <CarouselItem key={i}>
+                                    {/* Full-size phone photos shown ≤400px wide; next/image serves resized WebP/AVIF. */}
+                                    <Image src={photo} alt={`Fixture ${i + 1}`} sizes="400px"
+                                           placeholder="blur"
+                                           className="h-full w-full object-cover rounded-lg p-8"/>
+                                </CarouselItem>
+                            ))}
                         </CarouselContent>
                         <CarouselPrevious className="z-10" />
                         <CarouselNext />

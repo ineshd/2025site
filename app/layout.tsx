@@ -15,6 +15,9 @@ const asap = Asap({
 const robotoMono = Roboto_Mono({
     variable: "--font-roboto-mono",
     subsets: ["latin"],
+    // Only the footer uses it, at one weight: a static 400 file is ~13 KB vs ~33 KB for
+    // the variable font. (Asap and Montserrat use 3+ weights, where the variable file wins.)
+    weight: ["400"],
 });
 
 const montserrat = Montserrat({
