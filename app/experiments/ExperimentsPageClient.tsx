@@ -9,7 +9,7 @@ import { Link2 } from "lucide-react";
 const experiments = [
     {
         name: "Finding New Fixtures",
-        description: "A look at discovering and visualizing lighting fixtures; a small experiment in data and design.",
+        description: "Tracking down the water-hungry fixtures in our house and finding efficient swaps, saved about 554 gallons a week.",
         href: "/find-new-fixtures",
         external: false,
     },
