@@ -3,7 +3,7 @@ import ExperimentsPageClient from "./ExperimentsPageClient";
 
 export const metadata: Metadata = {
     title: "Experiments",
-    description: "Interactive experiments, prototypes, and creative builds by Inesh Dey.",
+    description: "my experiments",
     alternates: {
         canonical: "/experiments",
     },

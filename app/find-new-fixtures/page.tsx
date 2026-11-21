@@ -3,7 +3,7 @@ import FindingNewFixturesClient from "./FindingNewFixturesClient";
 
 export const metadata: Metadata = {
     title: "Finding New Fixtures",
-    description: "A data and design experiment exploring water use and identifying new fixtures by Inesh Dey.",
+    description: "my experiment in finding new fixtures",
     alternates: {
         canonical: "/find-new-fixtures",
     },

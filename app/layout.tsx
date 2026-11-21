@@ -31,16 +31,14 @@ export const metadata: Metadata = {
         default: "Inesh Dey",
         template: "%s | Inesh Dey",
     },
-    description: "Inesh Dey's portfolio featuring computer science, 3D graphics, web development, machine learning, projects, and experience.",
+    description: "computer science student at umich",
     openGraph: {
         type: "website",
         locale: "en_US",
         siteName: "Inesh Dey",
-        description: "Inesh Dey's portfolio featuring computer science, 3D graphics, web development, machine learning, projects, and experience.",
     },
     twitter: {
         card: "summary_large_image",
-        description: "Inesh Dey's portfolio featuring computer science, 3D graphics, web development, machine learning, projects, and experience.",
     },
     robots: {
         index: true,
