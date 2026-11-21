@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
 import TransitionLink from '@/app/components/TransitionLink';
+import SweepReveal from '@/app/components/SweepReveal';
 
 interface HeaderProps {
     position?: 'absolute' | 'sticky';
@@ -19,8 +20,15 @@ const Header = ({ position = 'sticky' }: HeaderProps) => {
     const [menuOpen, setMenuOpen] = useState(false);
 
     return (
+        // Darkened bar: whatever is behind it (background text, scrolled content) is
+        // darkened by a gradient that fades out just below it. (No backdrop blur: it
+        // re-blurs the animated background every frame and was too slow.) The open
+        // phone menu gets a solid backing.
         <header
-            className={`[view-transition-name:navbar] shadow-2xl z-50 w-full bg-muted flex flex-col ${position === 'absolute' ? 'absolute' : 'sticky top-0'}`}>
+            className={`[view-transition-name:navbar] z-50 w-full flex flex-col ${menuOpen ? 'max-lg:bg-muted' : ''} ${position === 'absolute' ? 'absolute' : 'sticky top-0'}`}>
+            {/* Darkening gradient: solid at the top, fading out a little below the bar. */}
+            <div aria-hidden="true"
+                 className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[calc(100%+2rem)] bg-linear-to-b from-background via-background/85 to-transparent"/>
             <div className="px-8 h-32 max-lg:h-24 flex-row flex items-center">
                 <TransitionLink href="/" className="group">
                     <div className={"flex flex-col my-auto flex-1"}>
@@ -43,12 +51,14 @@ const Header = ({ position = 'sticky' }: HeaderProps) => {
                             href={link.href}
                             className="group relative px-5 py-2 text-background active:brightness-90 transition-[filter] duration-200"
                         >
-                            {/* Slanted green tab at rest; blue sweeps across it on hover. */}
+                            {/* Slanted green tab at rest; blue sweeps across it on hover, turning the text white as it goes. */}
                             <span className="absolute inset-0 -skew-x-12 bg-primary" />
-                            <span className="absolute inset-y-0 left-0 w-0 -skew-x-12 bg-secondary group-hover:w-full transition-all duration-300 ease-out" />
                             <span className="relative">
                                 {link.label}
                             </span>
+                            <SweepReveal skewed className="px-5 py-2">
+                                <span className="relative">{link.label}</span>
+                            </SweepReveal>
                         </TransitionLink>
                     ))}
                 </nav>

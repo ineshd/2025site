@@ -27,6 +27,9 @@ const GLIDE_MS = 110;             // time constant of the glide toward the targe
 const HOLD_DELAY_MS = 350;        // hold a button this long before it starts repeating
 const HOLD_REPEAT_MS = 140;       // then step this often while held
 const DRAG_THRESHOLD_PX = 4;      // mouse movement before a press counts as a drag
+const INERTIA_MS = 325;           // how far a fling coasts: release speed x this
+const VELOCITY_WINDOW_MS = 100;   // release speed is measured over the last this-much of the drag
+const MAX_COAST_MS = 600;         // slowest a fling's glide may settle
 
 // Wrap x into [-n/2, n/2): distance around the circle.
 const wrap = (x: number, n: number) => {
@@ -48,8 +51,8 @@ export default function AwardsWheel({ groups }: { groups: AwardGroup[] }) {
     const [pos, setPos] = useState(0);        // rendered position, in names (unbounded)
     const posRef = useRef(0);
     const target = useRef(0);                 // where the wheel is gliding to
-    const [selected, setSelected] = useState(0);
     const frame = useRef<number | null>(null);
+    const glideMs = useRef(GLIDE_MS);         // time constant of the current glide
     const reducedMotion = useRef(false);
 
     useEffect(() => {
@@ -74,16 +77,16 @@ export default function AwardsWheel({ groups }: { groups: AwardGroup[] }) {
                 frame.current = null;
                 return;
             }
-            setPosition(posRef.current + diff * (1 - Math.exp(-(now - last) / GLIDE_MS)));
+            setPosition(posRef.current + diff * (1 - Math.exp(-(now - last) / glideMs.current)));
             last = now;
             frame.current = requestAnimationFrame(tick);
         };
         frame.current = requestAnimationFrame(tick);
     }, [setPosition]);
 
-    const moveTo = useCallback((t: number) => {
+    const moveTo = useCallback((t: number, timeConstant = GLIDE_MS) => {
         target.current = t;
-        setSelected(mod(t, n));
+        glideMs.current = timeConstant;
         if (reducedMotion.current) {
             if (frame.current !== null) cancelAnimationFrame(frame.current);
             frame.current = null;
@@ -91,7 +94,7 @@ export default function AwardsWheel({ groups }: { groups: AwardGroup[] }) {
         } else {
             glide();
         }
-    }, [glide, n, setPosition]);
+    }, [glide, setPosition]);
 
     const step = useCallback((delta: number) => moveTo(Math.round(target.current) + delta), [moveTo]);
 
@@ -115,14 +118,15 @@ export default function AwardsWheel({ groups }: { groups: AwardGroup[] }) {
     };
 
     // Drag the list with a mouse/pen to spin it (not touch, so swiping still
-    // scrolls the page); it snaps to the nearest name on release.
-    const drag = useRef<{ y: number; pos: number; moved: boolean } | null>(null);
+    // scrolls the page); on release it snaps to a name.
+    // Releasing mid-drag flings it: it coasts on in that direction and settles on a name.
+    const drag = useRef<{ y: number; pos: number; moved: boolean; samples: { t: number; p: number }[] } | null>(null);
     const suppressClick = useRef(false);
     const slotPx = () => SPACING_REM * parseFloat(getComputedStyle(document.documentElement).fontSize);
     const onListPointerDown = (e: PointerEvent<HTMLUListElement>) => {
         suppressClick.current = false;
         if (e.pointerType === "touch" || e.button !== 0) return;
-        drag.current = { y: e.clientY, pos: posRef.current, moved: false };
+        drag.current = { y: e.clientY, pos: posRef.current, moved: false, samples: [] };
     };
     const onListPointerMove = (e: PointerEvent<HTMLUListElement>) => {
         const d = drag.current;
@@ -137,16 +141,28 @@ export default function AwardsWheel({ groups }: { groups: AwardGroup[] }) {
             frame.current = null;
         }
         const p = d.pos - dy / slotPx();
+        const now = performance.now();
+        d.samples.push({ t: now, p });
+        while (d.samples.length > 2 && now - d.samples[0].t > VELOCITY_WINDOW_MS) d.samples.shift();
         target.current = p;
         setPosition(p);
-        setSelected(mod(p, n));
     };
     const onListPointerUp = () => {
         const d = drag.current;
         drag.current = null;
         if (d?.moved) {
             suppressClick.current = true;
-            moveTo(Math.round(posRef.current));
+            // Release speed in names/ms, or 0 if the pointer had stopped before letting go.
+            const now = performance.now();
+            const first = d.samples[0];
+            const last = d.samples[d.samples.length - 1];
+            const v = last && now - last.t < 50 && last.t > first.t ? (last.p - first.p) / (last.t - first.t) : 0;
+            const from = posRef.current;
+            const to = Math.round(from + v * INERTIA_MS);
+            // Pick the glide's time constant so it leaves at the release speed (the
+            // glide's starting speed is distance / time constant): no jolt on letting go.
+            const tc = v !== 0 && Math.sign(to - from) === Math.sign(v) ? (to - from) / v : GLIDE_MS;
+            moveTo(to, Math.min(MAX_COAST_MS, Math.max(GLIDE_MS, tc)));
         }
     };
 
@@ -157,6 +173,9 @@ export default function AwardsWheel({ groups }: { groups: AwardGroup[] }) {
         e.preventDefault();
     };
 
+    // The selection follows the wheel's live position, so dragging or flinging
+    // shows each name's awards as it passes the centre, not just where it stops.
+    const selected = mod(pos, n);
     const group = groups[selected];
     const arrowClass = "size-10 grid place-items-center bg-primary text-background hover:bg-secondary active:brightness-90 transition-colors duration-200 select-none touch-manipulation";
 
@@ -198,7 +217,7 @@ export default function AwardsWheel({ groups }: { groups: AwardGroup[] }) {
                                         opacity,
                                     }}
                                     className={`block w-full text-left text-3xl max-sm:text-2xl font-black leading-tight origin-left
-                                                    transition-colors duration-300
+                                                    transition-colors duration-100
                                                     ${opacity === 0 ? "pointer-events-none" : ""}
                                                     ${isSelected ? "text-primary" : "text-foreground"}`}>
                                     {g.name}
@@ -210,10 +229,10 @@ export default function AwardsWheel({ groups }: { groups: AwardGroup[] }) {
             </div>
 
             {/* Keyed on the selection so the details fade in fresh each time. */}
-            <div key={group.name} aria-live="polite" className="animate-in fade-in slide-in-from-bottom-2 duration-500">
+            <div key={group.name} aria-live="polite" className="animate-in fade-in slide-in-from-bottom-2 duration-200">
                 <h3 className="text-xl font-bold leading-tight">{group.fullName ?? group.name}</h3>
                 <p className="text-sm text-foreground/30 tracking-wide mt-1 mb-2">
-                    {group.meta} · {selected + 1} / {n}
+                    {group.meta}
                 </p>
                 <ul className="divide-y divide-border/20">
                     {group.items.map((item, j) => (

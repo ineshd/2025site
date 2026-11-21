@@ -1,5 +1,6 @@
 "use client"
 
+import SweepReveal from "@/app/components/SweepReveal";
 import GaussianSplatViewer from "@/app/components/GaussianSplatViewer";
 import Image from "next/image";
 import { memo, useEffect, useRef, useState } from "react";
@@ -25,7 +26,7 @@ export const SplatContainer = memo(function SplatContainer() {
           />
 
           {/* Straight-edged green button over the preview; on hover blue sweeps in
-                with a slanted leading edge (overshoot clipped by overflow-hidden). */}
+                with a slanted leading edge, turning the text white as it goes. */}
           <button
             type="button"
             onMouseDown={(e) => {
@@ -34,8 +35,10 @@ export const SplatContainer = memo(function SplatContainer() {
             }}
             className="group relative z-10 w-fit overflow-hidden px-8 py-4 bg-primary text-background text-xl font-black shadow-md active:brightness-90 transition-[filter] duration-200"
           >
-            <span aria-hidden="true" className="absolute inset-y-0 -left-4 w-0 -skew-x-12 bg-secondary group-hover:w-[calc(100%+2rem)] transition-all duration-300 ease-out" />
             <span className="relative">Load 3D model</span>
+            <SweepReveal slant="13px" className="px-8 py-4">
+              <span className="relative">Load 3D model</span>
+            </SweepReveal>
           </button>
         </div>
       )}

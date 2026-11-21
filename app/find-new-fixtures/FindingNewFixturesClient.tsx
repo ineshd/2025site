@@ -39,7 +39,7 @@ export default function FindingNewFixturesClient() {
                 <p className={"text-center"}>a project by Inesh Dey</p>
                 <p className={"text-center"}>3/28/25</p>
                 <div aria-hidden="true" className={"opacity-10 absolute inset-0 z-10"}>
-                    <FullScreen4545Grid />
+                    <FullScreen4545Grid text="fixtures " />
                 </div>
             </motion.div>
             <div className="flex flex-col lg:flex-row items-center justify-center my-16 mx-16">

@@ -8,6 +8,9 @@ interface FullScreen4545GridProps {
     // view-transition snapshot stand-in so the browser never has to rasterize
     // the hundreds of live framer-motion nodes into a named-group snapshot.
     animate?: boolean;
+    // Fixed text to repeat (e.g. the page's name). When set, the flip easter egg's
+    // text list is replaced by just this.
+    text?: string;
 }
 
 const getSystemInfo = (): string => {
@@ -52,7 +55,7 @@ const SCROLL_BLUR_PER_PX = 35;
 const SCROLL_BLUR_MAX_PX = 8;
 const SCROLL_BLUR_STEP_PX = 0.25; // only re-apply the blur when it changes by this much
 
-const FullScreen4545Grid: React.FC<FullScreen4545GridProps> = ({ clickToFlip = false, animate = true }) => {
+const FullScreen4545Grid: React.FC<FullScreen4545GridProps> = ({ clickToFlip = false, animate = true, text: fixedText }) => {
     const [textIndex, setTextIndex] = useState(0);
     const [flipPhase, setFlipPhase] = useState<FlipPhase>('idle');
     // Read on the client only (empty during server render); it never changes, so there's nothing to subscribe to.
@@ -120,8 +123,8 @@ const FullScreen4545Grid: React.FC<FullScreen4545GridProps> = ({ clickToFlip = f
     });
 
     const flipTexts = useMemo(
-        () => systemInfo ? [...FLIP_TEXTS, systemInfo] : FLIP_TEXTS,
-        [systemInfo]
+        () => fixedText ? [fixedText] : systemInfo ? [...FLIP_TEXTS, systemInfo] : FLIP_TEXTS,
+        [fixedText, systemInfo]
     );
 
     /**
@@ -213,7 +216,7 @@ const FullScreen4545Grid: React.FC<FullScreen4545GridProps> = ({ clickToFlip = f
             <span
                 ref={measureRef}
                 aria-hidden="true"
-                className="text-5xl/none font-bold italic spacing-1 text-nowrap"
+                className="text-5xl/none font-bold italic spacing-1 whitespace-pre"
                 style={{ position: 'fixed', visibility: 'hidden', pointerEvents: 'none', top: -9999, left: -9999 }}
             />
 
@@ -225,7 +228,7 @@ const FullScreen4545Grid: React.FC<FullScreen4545GridProps> = ({ clickToFlip = f
                     <div className="rotate-12">
                         {Array.from({ length: numRows }, (_row, rowIndex) => (
                             <div key={rowIndex} className={`flex justify-center ${rowIndex % 2 === 0 ? 'ml-16' : 'ml-0'}`}>
-                                <span className="text-5xl/none font-bold text-text italic spacing-1 text-nowrap">
+                                <span className="text-5xl/none font-bold text-text italic spacing-1 whitespace-pre">
                                     {text.repeat(numCols / 2)}
                                 </span>
                             </div>
@@ -262,7 +265,7 @@ const FullScreen4545Grid: React.FC<FullScreen4545GridProps> = ({ clickToFlip = f
                                                 key={colIndex}
                                                 role="presentation"
                                                 onClick={handleClick}
-                                                className={`text-5xl/none font-bold text-text italic spacing-1 hover:text-primary transition-colors text-nowrap ${clickToFlip ? 'cursor-pointer' : ''}`}
+                                                className={`text-5xl/none font-bold text-text italic spacing-1 hover:text-primary transition-colors whitespace-pre ${clickToFlip ? 'cursor-pointer' : ''}`}
                                             >
                                                 {text}
                                             </span>

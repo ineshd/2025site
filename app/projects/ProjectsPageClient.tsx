@@ -79,7 +79,7 @@ export default function ProjectsPageClient() {
         <Layout>
 
             <section className="relative px-16 max-lg:px-8 z-10">
-                <div className="max-w-5xl mx-auto bg-background shadow-2xl min-h-screen px-10 py-28 max-lg:px-6">
+                <div className="max-w-5xl mx-auto bg-background shadow-2xl min-h-screen px-10 py-28 lg:-mt-32 lg:pt-60 max-lg:px-6">
                     <h1 className="[view-transition-name:projects-heading] text-5xl max-lg:text-4xl max-sm:text-3xl font-black mb-14">
                         Projects
                     </h1>
@@ -118,9 +118,9 @@ export default function ProjectsPageClient() {
             </section>
             {/* Pinned while scrolling but ends with the page content (not fixed),
                 so it never shows behind the footer or in overscroll. */}
-            <div aria-hidden="true" className="max-lg:hidden absolute inset-0 pointer-events-none z-0">
+            <div aria-hidden="true" className="max-lg:hidden absolute inset-x-0 bottom-0 -top-32 pointer-events-none z-0">
                 <div className="sticky top-0 h-screen overflow-hidden opacity-10">
-                    <FullScreen4545Grid />
+                    <FullScreen4545Grid text="projects " />
                 </div>
             </div>
         </Layout>

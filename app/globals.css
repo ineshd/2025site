@@ -202,3 +202,15 @@ h3,
         scrollbar-color: var(--color-primary) var(--color-muted);
     }
 }
+/* SweepReveal: hidden as a sliver left of the button, it sweeps right on hover with a
+   leading edge leaning like the -12deg tabs (top ahead of bottom). The 2rem overshoot
+   covers skewed backgrounds that poke past the button's box. */
+.sweep-reveal {
+    --sweep-slant: 9px;
+    clip-path: polygon(-2rem 0, calc(-2rem + var(--sweep-slant)) 0, -2rem 100%, -2rem 100%);
+    transition: clip-path 300ms ease-out;
+}
+
+.group:hover .sweep-reveal {
+    clip-path: polygon(-2rem 0, calc(100% + 2rem) 0, calc(100% + 2rem - var(--sweep-slant)) 100%, -2rem 100%);
+}

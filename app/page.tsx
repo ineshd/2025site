@@ -99,20 +99,11 @@ export const metadata = {
     siteName: "Inesh Dey",
     title: "Inesh Dey",
     description: layoutMetadata.description,
-    images: [
-      {
-        url: "/splats/splat-preview.png",
-        width: 1200,
-        height: 630,
-        alt: "Inesh Dey portfolio preview",
-      },
-    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Inesh Dey",
     description: layoutMetadata.description,
-    images: ["/splats/splat-preview.png"],
   },
 };
 

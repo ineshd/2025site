@@ -36,12 +36,10 @@ export const metadata: Metadata = {
         type: "website",
         locale: "en_US",
         siteName: "Inesh Dey",
-        title: "Inesh Dey",
         description: "Inesh Dey's portfolio featuring computer science, 3D graphics, web development, machine learning, projects, and experience.",
     },
     twitter: {
         card: "summary_large_image",
-        title: "Inesh Dey",
         description: "Inesh Dey's portfolio featuring computer science, 3D graphics, web development, machine learning, projects, and experience.",
     },
     robots: {
