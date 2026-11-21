@@ -86,7 +86,7 @@ export default function ProjectsPageClient() {
                     <div className="flex flex-col gap-4">
                         {projects.map((project) => (
                             <Link key={project.name} href={project.href} target="_blank"
-                                className="group relative isolate flex items-center gap-12 max-lg:flex-col max-lg:items-stretch -mx-6 px-6 py-6">
+                                className="group relative isolate flex items-center gap-12 max-lg:flex-col max-lg:items-stretch max-lg:gap-6 max-lg:bg-muted -mx-6 px-6 py-6">
                                 <EntryHoverFill expands={!!project.image} />
                                 {project.image && <EntryPreviewImage image={project.image} alt={`${project.name} preview`} />}
                                 {project.splineScene && (

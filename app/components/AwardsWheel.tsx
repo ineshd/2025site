@@ -1,6 +1,7 @@
 "use client";
 
 import { KeyboardEvent, PointerEvent, useCallback, useEffect, useRef, useState } from "react";
+import AwardsPivot from "@/app/components/AwardsPivot";
 
 export type AwardGroup = {
     // Short name for the wheel; long names would wrap into each other there.
@@ -176,72 +177,82 @@ export default function AwardsWheel({ groups }: { groups: AwardGroup[] }) {
     // The selection follows the wheel's live position, so dragging or flinging
     // shows each name's awards as it passes the centre, not just where it stops.
     const selected = mod(pos, n);
-    const group = groups[selected];
     const arrowClass = "size-10 grid place-items-center bg-primary text-background hover:bg-secondary active:brightness-90 transition-colors duration-200 select-none touch-manipulation";
 
     return (
-        <section aria-roledescription="carousel" aria-label="Awards"
-            className="grid lg:grid-cols-2 gap-x-12 gap-y-6 items-center">
-            <div className="flex items-center gap-4">
-                <div className="flex flex-col gap-3">
-                    <button type="button" aria-label="Previous award group" className={arrowClass}
-                        onPointerDown={startHold(-1)} onPointerUp={stopHold} onPointerLeave={stopHold}
-                        onPointerCancel={stopHold} onContextMenu={(e) => e.preventDefault()} onKeyDown={onKeyDown}
-                        onClick={(e) => e.detail === 0 && step(-1) /* keyboard activation */}>
-                        <span aria-hidden="true" className="material-symbols-rounded">arrow_upward</span>
-                    </button>
-                    <button type="button" aria-label="Next award group" className={arrowClass}
-                        onPointerDown={startHold(1)} onPointerUp={stopHold} onPointerLeave={stopHold}
-                        onPointerCancel={stopHold} onContextMenu={(e) => e.preventDefault()} onKeyDown={onKeyDown}
-                        onClick={(e) => e.detail === 0 && step(1) /* keyboard activation */}>
-                        <span aria-hidden="true" className="material-symbols-rounded">arrow_downward</span>
-                    </button>
+        <section aria-roledescription="carousel" aria-label="Awards">
+            {/* Phones get a sideways-swiping pivot instead of the vertical wheel. */}
+            <AwardsPivot groups={groups} className="lg:hidden" />
+            <div className="max-lg:hidden grid grid-cols-2 gap-x-12 items-center">
+                <div className="flex items-center gap-4">
+                    <div className="flex flex-col gap-3">
+                        <button type="button" aria-label="Previous award group" className={arrowClass}
+                            onPointerDown={startHold(-1)} onPointerUp={stopHold} onPointerLeave={stopHold}
+                            onPointerCancel={stopHold} onContextMenu={(e) => e.preventDefault()} onKeyDown={onKeyDown}
+                            onClick={(e) => e.detail === 0 && step(-1) /* keyboard activation */}>
+                            <span aria-hidden="true" className="material-symbols-rounded">arrow_upward</span>
+                        </button>
+                        <button type="button" aria-label="Next award group" className={arrowClass}
+                            onPointerDown={startHold(1)} onPointerUp={stopHold} onPointerLeave={stopHold}
+                            onPointerCancel={stopHold} onContextMenu={(e) => e.preventDefault()} onKeyDown={onKeyDown}
+                            onClick={(e) => e.detail === 0 && step(1) /* keyboard activation */}>
+                            <span aria-hidden="true" className="material-symbols-rounded">arrow_downward</span>
+                        </button>
+                    </div>
+                    <ul onPointerDown={onListPointerDown} onPointerMove={onListPointerMove}
+                        onPointerUp={onListPointerUp} onPointerCancel={onListPointerUp}
+                        className="relative flex-1 h-[34rem] overflow-hidden select-none cursor-grab active:cursor-grabbing">
+                        {groups.map((g, i) => {
+                            const dist = wrap(i - pos, n);
+                            const opacity = nameOpacity(dist);
+                            const isSelected = i === selected;
+                            return (
+                                <li key={g.name} className="absolute inset-x-0 top-1/2 -translate-y-1/2">
+                                    <button type="button" tabIndex={-1} aria-current={isSelected || undefined}
+                                        onClick={() => {
+                                            if (suppressClick.current) return;
+                                            const t = Math.round(target.current);
+                                            moveTo(t + wrap(i - t, n));
+                                        }}
+                                        style={{
+                                            transform: `translateY(calc(${dist.toFixed(4)} * ${SPACING_REM}rem)) scale(${Math.max(0.5, 1 - 0.15 * Math.abs(dist)).toFixed(4)})`,
+                                            opacity,
+                                        }}
+                                        className={`block w-full text-left text-3xl max-sm:text-2xl font-black leading-tight origin-left
+                                                        transition-colors duration-100
+                                                        ${opacity === 0 ? "pointer-events-none" : ""}
+                                                        ${isSelected ? "text-primary" : "text-foreground"}`}>
+                                        {g.name}
+                                    </button>
+                                </li>
+                            );
+                        })}
+                    </ul>
                 </div>
-                <ul onPointerDown={onListPointerDown} onPointerMove={onListPointerMove}
-                    onPointerUp={onListPointerUp} onPointerCancel={onListPointerUp}
-                    className="relative flex-1 h-[34rem] overflow-hidden select-none cursor-grab active:cursor-grabbing">
-                    {groups.map((g, i) => {
-                        const dist = wrap(i - pos, n);
-                        const opacity = nameOpacity(dist);
-                        const isSelected = i === selected;
-                        return (
-                            <li key={g.name} className="absolute inset-x-0 top-1/2 -translate-y-1/2">
-                                <button type="button" tabIndex={-1} aria-current={isSelected || undefined}
-                                    onClick={() => {
-                                        if (suppressClick.current) return;
-                                        const t = Math.round(target.current);
-                                        moveTo(t + wrap(i - t, n));
-                                    }}
-                                    style={{
-                                        transform: `translateY(calc(${dist.toFixed(4)} * ${SPACING_REM}rem)) scale(${Math.max(0.5, 1 - 0.15 * Math.abs(dist)).toFixed(4)})`,
-                                        opacity,
-                                    }}
-                                    className={`block w-full text-left text-3xl max-sm:text-2xl font-black leading-tight origin-left
-                                                    transition-colors duration-100
-                                                    ${opacity === 0 ? "pointer-events-none" : ""}
-                                                    ${isSelected ? "text-primary" : "text-foreground"}`}>
-                                    {g.name}
-                                </button>
-                            </li>
-                        );
-                    })}
-                </ul>
-            </div>
 
-            {/* Keyed on the selection so the details fade in fresh each time. */}
-            <div key={group.name} aria-live="polite" className="animate-in fade-in slide-in-from-bottom-2 duration-200">
-                <h3 className="text-xl font-bold leading-tight">{group.fullName ?? group.name}</h3>
-                <p className="text-sm text-foreground/30 tracking-wide mt-1 mb-2">
-                    {group.meta}
-                </p>
-                <ul className="divide-y divide-border/20">
-                    {group.items.map((item, j) => (
-                        <li key={j} className="py-3">
-                            <p className="text-lg font-bold">{item.title}</p>
-                            {item.detail && <p className="text-foreground/50 leading-relaxed">{item.detail}</p>}
-                        </li>
+                {/* Every group's details sit stacked in one grid cell, with only the selected one
+                    visible, so the panel is always as tall as the longest group and spinning never
+                    changes the section's height. The selected one fades in each time it gets the
+                    animation classes. */}
+                <div aria-live="polite" className="grid">
+                    {groups.map((g, i) => (
+                        <div key={g.name}
+                            className={`[grid-area:1/1] ${i === selected ? "animate-in fade-in slide-in-from-bottom-2 duration-200" : "invisible"}`}>
+                            <h3 className="text-xl font-bold leading-tight">{g.fullName ?? g.name}</h3>
+                            <p className="text-sm text-foreground/30 tracking-wide mt-1 mb-2">
+                                {g.meta}
+                            </p>
+                            <ul className="divide-y divide-border/20">
+                                {g.items.map((item, j) => (
+                                    <li key={j} className="py-3">
+                                        <p className="text-lg font-bold">{item.title}</p>
+                                        {item.detail && <p className="text-foreground/50 leading-relaxed">{item.detail}</p>}
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
                     ))}
-                </ul>
+                </div>
             </div>
         </section>
     );

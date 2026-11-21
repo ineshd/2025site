@@ -141,7 +141,14 @@ const Footer = () => {
                 <span aria-hidden="true" className="hidden lg:block absolute inset-y-0 left-0 -right-16 -skew-x-12 bg-primary shadow-[inset_0_10px_12px_-10px_rgb(0_0_0/0.6)]" />
                 <div className="relative flex flex-col gap-2 lg:items-end">
                     <p>my time is {myTime ?? "--:--"}</p>
-                    {topTrack && <p className="text-foreground/50 lg:text-background/70 lowercase">my top track this week: {topTrack.title} by {topTrack.artist}</p>}
+                    {/* Label and song on their own lines, right-aligned with the rest; a long
+                        song name ends in "…" rather than wrapping (full name on hover). */}
+                    {topTrack && <p className="flex flex-col max-w-full lg:max-w-md lg:items-end lg:text-right text-foreground/50 lg:text-background/70 lowercase">
+                        <span>my top track this week:</span>
+                        <span className="max-w-full truncate" title={`${topTrack.title} by ${topTrack.artist}`}>
+                            {topTrack.title} by {topTrack.artist}
+                        </span>
+                    </p>}
                     <nav className="flex flex-wrap gap-x-4 gap-y-1 text-foreground/50 lg:text-background/70">
                         {LINKS.map((link) => (
                             <a key={link.label} href={link.href}

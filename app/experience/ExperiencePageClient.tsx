@@ -111,7 +111,7 @@ const experience: Experience[] = [
     },
 ];
 
-const itemClassName = "group relative isolate flex items-center gap-12 max-lg:flex-col max-lg:items-stretch -mx-6 px-6 py-6";
+const itemClassName = "group relative isolate flex items-center gap-12 max-lg:flex-col max-lg:items-stretch max-lg:gap-6 max-lg:bg-muted -mx-6 px-6 py-6";
 
 function ExperienceItem({ href, expands, children }: { href?: string; expands: boolean; children: ReactNode }) {
     return href ? (

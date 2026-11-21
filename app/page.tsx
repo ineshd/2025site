@@ -4,6 +4,7 @@ import NavCardLink from "@/app/components/NavCardLink";
 import AwardsWheel, { type AwardGroup } from "@/app/components/AwardsWheel";
 import Link from "next/link";
 import { Github, Linkedin, Mail } from "lucide-react";
+import SweepReveal from "@/app/components/SweepReveal";
 import { metadata as layoutMetadata } from "@/app/layout";
 import {
   BlogPlaceholder,
@@ -107,6 +108,12 @@ export const metadata = {
   },
 };
 
+const socialLinks = [
+  { href: "https://github.com/ineshd", label: "github", Icon: Github },
+  { href: "https://linkedin.com/in/ineshdey", label: "linkedin", Icon: Linkedin },
+  { href: "mailto:me@ineshd.com", label: "email", Icon: Mail },
+];
+
 export default function Home() {
   return (
     <Layout headerPosition="absolute">
@@ -141,30 +148,24 @@ export default function Home() {
             <p className="text-md tracking-wide pointer-events-auto">
               try clicking the background
             </p>
-            <div className="flex gap-6 mt-4 text-foreground/50 pointer-events-auto">
-              <Link
-                href="https://github.com/ineshd"
-                target="_blank"
-                aria-label="GitHub"
-                className="block p-1.5 hover:bg-primary hover:text-background active:bg-secondary transition-colors duration-200"
-              >
-                <Github size={28} />
-              </Link>
-              <Link
-                href="https://linkedin.com/in/ineshdey"
-                target="_blank"
-                aria-label="LinkedIn"
-                className="block p-1.5 hover:bg-primary hover:text-background active:bg-secondary transition-colors duration-200"
-              >
-                <Linkedin size={28} />
-              </Link>
-              <Link
-                href="mailto:me@ineshd.com"
-                aria-label="Email"
-                className="block p-1.5 hover:bg-primary hover:text-background active:bg-secondary transition-colors duration-200"
-              >
-                <Mail size={28} />
-              </Link>
+            {/* One slanted green bar, a segment per link, with the blue hover sweep. */}
+            <div className="flex w-fit mt-4 pointer-events-auto">
+              {socialLinks.map(({ href, label, Icon }, i) => (
+                <Link
+                  key={label}
+                  href={href}
+                  target={href.startsWith("mailto:") ? undefined : "_blank"}
+                  className="group relative flex items-center gap-2.5 px-6 py-3 max-sm:px-4 text-background text-lg max-sm:text-base font-[family-name:var(--font-roboto-mono)] active:brightness-90 transition-[filter] duration-200"
+                >
+                  <span aria-hidden="true" className={`absolute inset-0 -skew-x-12 bg-primary ${i > 0 ? "border-l-2 border-background/25" : ""}`} />
+                  <Icon size={22} aria-hidden="true" className="relative" />
+                  <span className="relative">{label}</span>
+                  <SweepReveal skewed slant="11px" className="flex items-center gap-2.5 px-6 py-3 max-sm:px-4">
+                    <Icon size={22} className="relative" />
+                    <span className="relative">{label}</span>
+                  </SweepReveal>
+                </Link>
+              ))}
             </div>
           </div>
           <p className="absolute bottom-12 inset-x-0 text-center text-xl text-foreground/50 tracking-wide pointer-events-none">
